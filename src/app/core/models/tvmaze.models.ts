@@ -96,6 +96,9 @@ export interface CastMember {
   voice: boolean;
 }
 
+/** Minimal show data needed to render a card (also what favorites persist). */
+export type ShowSummary = Pick<Show, 'id' | 'name' | 'image' | 'rating' | 'genres' | 'premiered'>;
+
 /** Show returned by `/shows/:id?embed[]=seasons&embed[]=cast`. */
 export interface ShowDetails extends Show {
   _embedded: {

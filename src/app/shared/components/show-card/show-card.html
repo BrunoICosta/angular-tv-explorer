@@ -1,0 +1,25 @@
+<article class="card">
+  <a class="card__link" [routerLink]="['/series', show().id]">
+    <div class="card__poster">
+      @if (show().image?.medium; as poster) {
+        <img [src]="poster" [alt]="'Pôster de ' + show().name" loading="lazy" decoding="async" />
+      } @else {
+        <div class="card__placeholder" aria-hidden="true">{{ initials() }}</div>
+      }
+      <app-rating class="card__rating" [value]="show().rating.average" />
+    </div>
+
+    <div class="card__body">
+      <h3 class="card__title">{{ show().name }}</h3>
+      <p class="card__meta">
+        @if (year(); as y) {
+          <span>{{ y }}</span>
+        }
+        @for (genre of genres(); track genre) {
+          <span>{{ genre }}</span>
+        }
+      </p>
+    </div>
+  </a>
+  <ng-content />
+</article>

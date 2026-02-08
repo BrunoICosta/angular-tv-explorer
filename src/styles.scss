@@ -252,3 +252,35 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+// ---------- Loading skeletons ----------
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 6%), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.4s infinite;
+  }
+}
+
+.skeleton-line {
+  height: 12px;
+
+  &--short {
+    width: 60%;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
