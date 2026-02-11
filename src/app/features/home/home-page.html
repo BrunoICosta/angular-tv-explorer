@@ -17,6 +17,24 @@
       (action)="retry()"
     />
   } @else {
+    <app-catalog-toolbar
+      [genres]="genres()"
+      [(genre)]="genre"
+      [(sort)]="sort"
+      [matchCount]="filteredShows().length"
+      [loadedCount]="shows().length"
+    />
+
+    @if (filteredShows().length === 0 && status() !== 'loading') {
+      <app-state-message
+        icon="search"
+        title="Nenhuma série com esse gênero por aqui"
+        description="Role para carregar mais páginas do catálogo ou escolha outro gênero."
+        actionLabel="Limpar filtro"
+        (action)="genre.set(null)"
+      />
+    }
+
     <ul class="show-grid" aria-label="Séries do catálogo">
       @for (show of visibleShows(); track show.id) {
         <li>

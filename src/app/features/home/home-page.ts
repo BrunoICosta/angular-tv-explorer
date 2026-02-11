@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, exhaustMap, catchError, EMPTY, tap } from 'rxjs';
 
@@ -9,6 +16,8 @@ import { ShowCard } from '../../shared/components/show-card/show-card';
 import { ShowGridSkeleton } from '../../shared/components/skeleton/show-grid-skeleton';
 import { StateMessage } from '../../shared/components/state-message/state-message';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
+import { ShowSort, collectGenres, filterByGenre, sortShows } from '../../shared/utils/show-utils';
+import { CatalogToolbar } from './catalog-toolbar/catalog-toolbar';
 
 /** How many cards are revealed per scroll step (an API page has 250 shows). */
 const RENDER_CHUNK = 48;
@@ -17,7 +26,7 @@ type CatalogStatus = 'idle' | 'loading' | 'error' | 'complete';
 
 @Component({
   selector: 'app-home-page',
-  imports: [ShowCard, ShowGridSkeleton, StateMessage, InfiniteScrollDirective],
+  imports: [ShowCard, ShowGridSkeleton, StateMessage, InfiniteScrollDirective, CatalogToolbar],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,14 +39,27 @@ export class HomePage {
   protected readonly shows = signal<Show[]>([]);
   protected readonly status = signal<CatalogStatus>('idle');
   protected readonly errorMessage = signal('');
-  private readonly renderLimit = signal(RENDER_CHUNK);
+  protected readonly genre = signal<string | null>(null);
+  protected readonly sort = signal<ShowSort>('default');
 
-  protected readonly visibleShows = computed(() => this.shows().slice(0, this.renderLimit()));
+  /** Resets to the first chunk whenever the filters change. */
+  private readonly renderLimit = linkedSignal({
+    source: () => [this.genre(), this.sort()] as const,
+    computation: () => RENDER_CHUNK,
+  });
+
+  protected readonly genres = computed(() => collectGenres(this.shows()));
+  protected readonly filteredShows = computed(() =>
+    sortShows(filterByGenre(this.shows(), this.genre()), this.sort()),
+  );
+  protected readonly visibleShows = computed(() =>
+    this.filteredShows().slice(0, this.renderLimit()),
+  );
   protected readonly isInitialLoad = computed(
     () => this.status() === 'loading' && this.shows().length === 0,
   );
   protected readonly hasMore = computed(
-    () => this.status() !== 'complete' || this.renderLimit() < this.shows().length,
+    () => this.status() !== 'complete' || this.renderLimit() < this.filteredShows().length,
   );
   protected readonly scrollDisabled = computed(
     () => this.status() === 'loading' || this.status() === 'error' || !this.hasMore(),
@@ -74,7 +96,7 @@ export class HomePage {
 
   /** Reveals already loaded shows first and only hits the API when the buffer is exhausted. */
   protected onScrolled(): void {
-    if (this.renderLimit() < this.shows().length) {
+    if (this.renderLimit() < this.filteredShows().length) {
       this.renderLimit.update((limit) => limit + RENDER_CHUNK);
       return;
     }

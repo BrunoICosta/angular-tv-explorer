@@ -16,7 +16,7 @@
           <span>{{ y }}</span>
         }
         @for (genre of genres(); track genre) {
-          <span>{{ genre }}</span>
+          <span>{{ genre | genreLabel }}</span>
         }
       </p>
     </div>
