@@ -1,0 +1,78 @@
+<section class="container page">
+  <header class="page-header">
+    <p class="eyebrow">Busca</p>
+    <h1>Encontre qualquer série</h1>
+    <p>Digite o nome de uma série. A busca é feita enquanto você digita.</p>
+  </header>
+
+  <form class="search" role="search" (submit)="$event.preventDefault()">
+    <label class="visually-hidden" for="search-input">Nome da série</label>
+    <app-icon class="search__icon" name="search" />
+    <input
+      #searchInput
+      id="search-input"
+      class="search__input"
+      type="search"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Ex.: Breaking Bad, Dark, The Office…"
+      [formControl]="query"
+    />
+    @if (query.value) {
+      <button type="button" class="search__clear" aria-label="Limpar busca" (click)="clear()">
+        <app-icon name="close" [size]="18" />
+      </button>
+    }
+  </form>
+
+  <div class="results">
+    @let current = state();
+    @switch (current.status) {
+      @case ('loading') {
+        <app-show-grid-skeleton [count]="10" />
+      }
+      @case ('error') {
+        <app-state-message
+          variant="error"
+          icon="refresh"
+          title="A busca falhou"
+          [description]="current.message"
+          actionLabel="Tentar novamente"
+          (action)="retry()"
+        />
+      }
+      @case ('success') {
+        @if (current.results.length) {
+          <p class="results__summary" role="status">
+            {{ current.results.length }} resultado(s) para <strong>“{{ current.query }}”</strong>
+          </p>
+          <ul class="show-grid">
+            @for (show of current.results; track show.id) {
+              <li><app-show-card [show]="show" /></li>
+            }
+          </ul>
+        } @else {
+          <app-state-message
+            icon="search"
+            title="Nada encontrado"
+            [description]="
+              'Nenhuma série corresponde a “' + current.query + '”. Tente outro termo.'
+            "
+          />
+        }
+      }
+      @default {
+        <div class="suggestions">
+          <p>Digite pelo menos {{ minLength }} caracteres ou experimente uma sugestão:</p>
+          <ul>
+            @for (term of suggestions; track term) {
+              <li>
+                <button type="button" class="btn" (click)="useSuggestion(term)">{{ term }}</button>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    }
+  </div>
+</section>
