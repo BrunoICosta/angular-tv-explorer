@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
-import { Episode, ScheduleEpisode, SearchResult, Show, ShowDetails } from '../models/tvmaze.models';
+import { Episode, ScheduleEpisode, SearchResult, Show, ShowDetails } from '../models/tvmaze.model';
 import { TVMAZE_API_URL } from './api.config';
 
 @Injectable({ providedIn: 'root' })

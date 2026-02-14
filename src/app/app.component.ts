@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { Footer } from './layout/footer/footer';
-import { Header } from './layout/header/header';
-import { Toasts } from './layout/toasts/toasts';
+import { FooterComponent } from './core/layout/footer/footer.component';
+import { HeaderComponent } from './core/layout/header/header.component';
+import { ToastsComponent } from './core/layout/toasts/toasts.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, Toasts],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, ToastsComponent],
   template: `
     <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
     <app-header />
@@ -48,4 +48,4 @@ import { Toasts } from './layout/toasts/toasts';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {}
+export class AppComponent {}

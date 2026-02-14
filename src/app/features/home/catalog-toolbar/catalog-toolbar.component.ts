@@ -77,7 +77,7 @@ import { SORT_OPTIONS, ShowSort } from '../../../shared/utils/show-utils';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CatalogToolbar {
+export class CatalogToolbarComponent {
   readonly genres = input.required<readonly string[]>();
   readonly matchCount = input.required<number>();
   readonly loadedCount = input.required<number>();

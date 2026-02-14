@@ -11,13 +11,13 @@ import { Subject, exhaustMap, catchError, EMPTY, tap } from 'rxjs';
 
 import { TvmazeApiService } from '../../core/api/tvmaze-api.service';
 import { ApiError, toErrorMessage } from '../../core/http/api-error';
-import { Show } from '../../core/models/tvmaze.models';
-import { ShowCard } from '../../shared/components/show-card/show-card';
-import { ShowGridSkeleton } from '../../shared/components/skeleton/show-grid-skeleton';
-import { StateMessage } from '../../shared/components/state-message/state-message';
+import { Show } from '../../core/models/tvmaze.model';
+import { ShowCardComponent } from '../../shared/components/show-card/show-card.component';
+import { ShowGridSkeletonComponent } from '../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
+import { StateMessageComponent } from '../../shared/components/state-message/state-message.component';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
 import { ShowSort, collectGenres, filterByGenre, sortShows } from '../../shared/utils/show-utils';
-import { CatalogToolbar } from './catalog-toolbar/catalog-toolbar';
+import { CatalogToolbarComponent } from './catalog-toolbar/catalog-toolbar.component';
 
 /** How many cards are revealed per scroll step (an API page has 250 shows). */
 const RENDER_CHUNK = 48;
@@ -26,12 +26,18 @@ type CatalogStatus = 'idle' | 'loading' | 'error' | 'complete';
 
 @Component({
   selector: 'app-home-page',
-  imports: [ShowCard, ShowGridSkeleton, StateMessage, InfiniteScrollDirective, CatalogToolbar],
-  templateUrl: './home-page.html',
-  styleUrl: './home-page.scss',
+  imports: [
+    ShowCardComponent,
+    ShowGridSkeletonComponent,
+    StateMessageComponent,
+    InfiniteScrollDirective,
+    CatalogToolbarComponent,
+  ],
+  templateUrl: './home-page.component.html',
+  styleUrl: './home-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePage {
+export class HomePageComponent {
   private readonly api = inject(TvmazeApiService);
   private readonly loadRequests = new Subject<void>();
   private nextPage = 0;

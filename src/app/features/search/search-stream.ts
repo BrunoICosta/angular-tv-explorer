@@ -10,7 +10,7 @@ import {
 } from 'rxjs';
 
 import { toErrorMessage } from '../../core/http/api-error';
-import { Show } from '../../core/models/tvmaze.models';
+import { Show } from '../../core/models/tvmaze.model';
 
 export const MIN_QUERY_LENGTH = 2;
 export const SEARCH_DEBOUNCE_MS = 350;

@@ -26,6 +26,12 @@ module.exports = tseslint.config(
         { type: 'element', prefix: 'app', style: 'kebab-case' },
       ],
       '@angular-eslint/prefer-on-push-component-change-detection': 'error',
+      '@angular-eslint/prefer-standalone': 'error',
+      '@angular-eslint/prefer-signals': 'error',
+      '@angular-eslint/no-host-metadata-property': 'off',
+      '@angular-eslint/use-lifecycle-interface': 'error',
+      '@angular-eslint/component-class-suffix': 'error',
+      '@angular-eslint/directive-class-suffix': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
     },
@@ -33,6 +39,10 @@ module.exports = tseslint.config(
   {
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
-    rules: {},
+    rules: {
+      '@angular-eslint/template/prefer-control-flow': 'error',
+      '@angular-eslint/template/prefer-self-closing-tags': 'error',
+      '@angular-eslint/template/no-any': 'error',
+    },
   },
 );

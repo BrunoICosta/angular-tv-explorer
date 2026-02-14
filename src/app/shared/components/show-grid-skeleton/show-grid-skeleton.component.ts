@@ -42,7 +42,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShowGridSkeleton {
+export class ShowGridSkeletonComponent {
   readonly count = input(12);
 
   protected readonly items = computed(() => Array.from({ length: this.count() }, (_, i) => i));

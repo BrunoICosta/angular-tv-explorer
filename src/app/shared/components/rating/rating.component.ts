@@ -1,11 +1,11 @@
 import { DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { Icon } from '../icon/icon';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-rating',
-  imports: [Icon, DecimalPipe],
+  imports: [IconComponent, DecimalPipe],
   template: `
     @if (value(); as rating) {
       <span class="rating" [attr.aria-label]="'Nota ' + (rating | number: '1.1-1') + ' de 10'">
@@ -36,6 +36,6 @@ import { Icon } from '../icon/icon';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Rating {
+export class RatingComponent {
   readonly value = input<number | null>(null);
 }

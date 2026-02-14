@@ -12,20 +12,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 
 import { TvmazeApiService } from '../../core/api/tvmaze-api.service';
-import { Icon } from '../../shared/components/icon/icon';
-import { ShowCard } from '../../shared/components/show-card/show-card';
-import { ShowGridSkeleton } from '../../shared/components/skeleton/show-grid-skeleton';
-import { StateMessage } from '../../shared/components/state-message/state-message';
+import { IconComponent } from '../../shared/components/icon/icon.component';
+import { ShowCardComponent } from '../../shared/components/show-card/show-card.component';
+import { ShowGridSkeletonComponent } from '../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
+import { StateMessageComponent } from '../../shared/components/state-message/state-message.component';
 import { MIN_QUERY_LENGTH, SEARCH_DEBOUNCE_MS, SearchState, searchStream } from './search-stream';
 
 @Component({
   selector: 'app-search-page',
-  imports: [ReactiveFormsModule, Icon, ShowCard, ShowGridSkeleton, StateMessage],
-  templateUrl: './search-page.html',
-  styleUrl: './search-page.scss',
+  imports: [
+    ReactiveFormsModule,
+    IconComponent,
+    ShowCardComponent,
+    ShowGridSkeletonComponent,
+    StateMessageComponent,
+  ],
+  templateUrl: './search-page.component.html',
+  styleUrl: './search-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchPage {
+export class SearchPageComponent {
   private readonly api = inject(TvmazeApiService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);

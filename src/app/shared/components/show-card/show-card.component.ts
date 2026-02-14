@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { ShowSummary } from '../../../core/models/tvmaze.models';
+import { ShowSummary } from '../../../core/models/tvmaze.model';
 import { yearOf } from '../../utils/show-utils';
 import { GenreLabelPipe } from '../../pipes/genre-label.pipe';
-import { Rating } from '../rating/rating';
+import { RatingComponent } from '../rating/rating.component';
 
 @Component({
   selector: 'app-show-card',
-  imports: [RouterLink, Rating, GenreLabelPipe],
-  templateUrl: './show-card.html',
-  styleUrl: './show-card.scss',
+  imports: [RouterLink, RatingComponent, GenreLabelPipe],
+  templateUrl: './show-card.component.html',
+  styleUrl: './show-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShowCard {
+export class ShowCardComponent {
   readonly show = input.required<ShowSummary>();
 
   protected readonly year = computed(() => yearOf(this.show().premiered));

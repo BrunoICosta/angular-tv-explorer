@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
-import { Icon, IconName } from '../icon/icon';
+import { IconComponent, IconName } from '../icon/icon.component';
 
 /** Empty / error placeholder with an optional action button. */
 @Component({
   selector: 'app-state-message',
-  imports: [Icon],
+  imports: [IconComponent],
   template: `
     <div class="state" [class.state--error]="variant() === 'error'" [attr.role]="role()">
       <span class="state__icon"><app-icon [name]="icon()" [size]="28" /></span>
@@ -59,7 +59,7 @@ import { Icon, IconName } from '../icon/icon';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StateMessage {
+export class StateMessageComponent {
   readonly title = input.required<string>();
   readonly description = input<string>();
   readonly icon = input<IconName>('tv');

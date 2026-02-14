@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { Icon, IconName } from '../../shared/components/icon/icon';
+import { IconComponent, IconName } from '../../../shared/components/icon/icon.component';
 
 interface NavItem {
   label: string;
@@ -12,12 +12,12 @@ interface NavItem {
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, Icon],
-  templateUrl: './header.html',
-  styleUrl: './header.scss',
+  imports: [RouterLink, RouterLinkActive, IconComponent],
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {
+export class HeaderComponent {
   protected readonly navItems: readonly NavItem[] = [
     { label: 'Catálogo', path: '/', icon: 'grid', exact: true },
     { label: 'Buscar', path: '/buscar', icon: 'search', exact: false },

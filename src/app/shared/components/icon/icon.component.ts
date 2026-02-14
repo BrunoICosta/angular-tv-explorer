@@ -45,7 +45,7 @@ export type IconName = keyof typeof ICONS;
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Icon {
+export class IconComponent {
   readonly name = input.required<IconName>();
   readonly size = input(20);
   readonly filled = input(false);

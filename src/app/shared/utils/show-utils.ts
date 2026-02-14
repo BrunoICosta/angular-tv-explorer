@@ -1,4 +1,4 @@
-import { ShowSummary } from '../../core/models/tvmaze.models';
+import { ShowSummary } from '../../core/models/tvmaze.model';
 
 export type ShowSort = 'default' | 'rating-desc' | 'rating-asc' | 'name';
 

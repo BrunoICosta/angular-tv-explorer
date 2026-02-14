@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { NotificationService } from '../../core/notifications/notification.service';
-import { Icon } from '../../shared/components/icon/icon';
+import { NotificationService } from '../../notifications/notification.service';
+import { IconComponent } from '../../../shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-toasts',
-  imports: [Icon],
+  imports: [IconComponent],
   template: `
     <div class="toasts" role="status" aria-live="polite">
       @for (toast of notifications.notifications(); track toast.id) {
@@ -82,6 +82,6 @@ import { Icon } from '../../shared/components/icon/icon';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Toasts {
+export class ToastsComponent {
   protected readonly notifications = inject(NotificationService);
 }
