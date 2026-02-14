@@ -1,0 +1,84 @@
+@let s = show();
+<article class="hero">
+  @if (s.image?.original; as backdrop) {
+    <div class="hero__backdrop" [style.background-image]="'url(' + backdrop + ')'"></div>
+  }
+
+  <div class="hero__poster">
+    @if (s.image?.medium; as poster) {
+      <img [src]="poster" [alt]="'Pôster de ' + s.name" width="280" height="420" />
+    } @else {
+      <div class="hero__poster-placeholder" aria-hidden="true">
+        <app-icon name="tv" [size]="48" />
+      </div>
+    }
+  </div>
+
+  <div class="hero__content">
+    <p class="eyebrow">{{ statusLabel() }}</p>
+    <h1 class="hero__title">{{ s.name }}</h1>
+
+    <ul class="hero__meta" aria-label="Informações da série">
+      <li><app-rating [value]="s.rating.average" /></li>
+      @if (years(); as y) {
+        <li>{{ y }}</li>
+      }
+      @if (runtime(); as minutes) {
+        <li>{{ minutes }} min</li>
+      }
+      @if (s.language) {
+        <li>{{ s.language }}</li>
+      }
+      @if (channel(); as name) {
+        <li>{{ name }}</li>
+      }
+    </ul>
+
+    @if (s.genres.length) {
+      <ul class="hero__genres" aria-label="Gêneros">
+        @for (genre of s.genres; track genre) {
+          <li class="chip">{{ genre | genreLabel }}</li>
+        }
+      </ul>
+    }
+
+    @if (s.summary) {
+      <div class="hero__summary prose" [innerHTML]="s.summary | sanitizeHtml"></div>
+    } @else {
+      <p class="hero__summary hero__summary--empty">Sinopse não disponível.</p>
+    }
+
+    <dl class="hero__facts">
+      @if (airs(); as schedule) {
+        <div>
+          <dt>Exibição</dt>
+          <dd>{{ schedule }}</dd>
+        </div>
+      }
+      <div>
+        <dt>Tipo</dt>
+        <dd>{{ s.type }}</dd>
+      </div>
+      <div>
+        <dt>Temporadas</dt>
+        <dd>{{ s._embedded.seasons.length }}</dd>
+      </div>
+    </dl>
+
+    <div class="hero__actions">
+      <ng-content />
+      @if (s.officialSite) {
+        <a class="btn" [href]="s.officialSite" target="_blank" rel="noopener">
+          Site oficial
+          <app-icon name="external" [size]="16" />
+          <span class="visually-hidden">(abre em nova aba)</span>
+        </a>
+      }
+      <a class="btn btn--ghost" [href]="s.url" target="_blank" rel="noopener">
+        Ver na TVMaze
+        <app-icon name="external" [size]="16" />
+        <span class="visually-hidden">(abre em nova aba)</span>
+      </a>
+    </div>
+  </div>
+</article>

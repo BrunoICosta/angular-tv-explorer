@@ -1,0 +1,42 @@
+<div class="container page">
+  <a class="back-link" routerLink="/">
+    <app-icon name="arrowLeft" [size]="18" />
+    Voltar ao catálogo
+  </a>
+
+  @let current = state();
+  @switch (current.status) {
+    @case ('loading') {
+      <div class="detail-skeleton" aria-hidden="true">
+        <div class="skeleton detail-skeleton__poster"></div>
+        <div class="detail-skeleton__body">
+          <div class="skeleton detail-skeleton__title"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line"></div>
+          <div class="skeleton skeleton-line skeleton-line--short"></div>
+        </div>
+      </div>
+      <span class="visually-hidden" role="status">Carregando detalhes da série…</span>
+    }
+    @case ('not-found') {
+      <app-state-message
+        icon="tv"
+        title="Série não encontrada"
+        description="Talvez o endereço esteja incorreto ou a série tenha sido removida da TVMaze."
+      />
+    }
+    @case ('error') {
+      <app-state-message
+        variant="error"
+        icon="refresh"
+        title="Não foi possível carregar a série"
+        [description]="current.message"
+        actionLabel="Tentar novamente"
+        (action)="retry()"
+      />
+    }
+    @case ('loaded') {
+      <app-show-hero [show]="current.show" />
+    }
+  }
+</div>

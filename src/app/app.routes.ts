@@ -12,6 +12,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/search/search.routes').then((m) => m.SEARCH_ROUTES),
   },
   {
+    path: 'series',
+    loadChildren: () =>
+      import('./features/show-detail/show-detail.routes').then((m) => m.SHOW_DETAIL_ROUTES),
+  },
+  {
     path: '**',
     loadChildren: () =>
       import('./features/not-found/not-found.routes').then((m) => m.NOT_FOUND_ROUTES),
