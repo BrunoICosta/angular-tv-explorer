@@ -11,12 +11,17 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 
-import { TvmazeApiService } from '../../core/api/tvmaze-api.service';
-import { IconComponent } from '../../shared/components/icon/icon.component';
-import { ShowCardComponent } from '../../shared/components/show-card/show-card.component';
-import { ShowGridSkeletonComponent } from '../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
-import { StateMessageComponent } from '../../shared/components/state-message/state-message.component';
-import { MIN_QUERY_LENGTH, SEARCH_DEBOUNCE_MS, SearchState, searchStream } from './search-stream';
+import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
+import { IconComponent } from '../../../../shared/components/icon/icon.component';
+import { ShowCardComponent } from '../../../../shared/components/show-card/show-card.component';
+import { ShowGridSkeletonComponent } from '../../../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
+import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
+import {
+  MIN_QUERY_LENGTH,
+  SEARCH_DEBOUNCE_MS,
+  SearchState,
+  searchStream,
+} from '../../data-access/search-stream';
 
 @Component({
   selector: 'app-search-page',

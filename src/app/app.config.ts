@@ -5,10 +5,12 @@ import {
   provideZoneChangeDetection,
 } from '@angular/core';
 import {
+  PreloadAllModules,
   TitleStrategy,
   provideRouter,
   withComponentInputBinding,
   withInMemoryScrolling,
+  withPreloading,
 } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -22,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
+      withPreloading(PreloadAllModules),
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' }),
     ),
     { provide: TitleStrategy, useClass: AppTitleStrategy },

@@ -1,22 +1,19 @@
 import { Routes } from '@angular/router';
 
+/** The shell only knows feature entry points; every feature lives in its own lazy chunk. */
 export const routes: Routes = [
   {
     path: '',
-    title: 'Catálogo',
-    loadComponent: () =>
-      import('./features/home/home-page.component').then((m) => m.HomePageComponent),
+    pathMatch: 'full',
+    loadChildren: () => import('./features/catalog/catalog.routes').then((m) => m.CATALOG_ROUTES),
   },
   {
     path: 'buscar',
-    title: 'Buscar',
-    loadComponent: () =>
-      import('./features/search/search-page.component').then((m) => m.SearchPageComponent),
+    loadChildren: () => import('./features/search/search.routes').then((m) => m.SEARCH_ROUTES),
   },
   {
     path: '**',
-    title: 'Página não encontrada',
-    loadComponent: () =>
-      import('./features/not-found/not-found-page.component').then((m) => m.NotFoundPageComponent),
+    loadChildren: () =>
+      import('./features/not-found/not-found.routes').then((m) => m.NOT_FOUND_ROUTES),
   },
 ];

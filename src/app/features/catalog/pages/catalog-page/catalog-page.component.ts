@@ -9,15 +9,20 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, exhaustMap, catchError, EMPTY, tap } from 'rxjs';
 
-import { TvmazeApiService } from '../../core/api/tvmaze-api.service';
-import { ApiError, toErrorMessage } from '../../core/http/api-error';
-import { Show } from '../../core/models/tvmaze.model';
-import { ShowCardComponent } from '../../shared/components/show-card/show-card.component';
-import { ShowGridSkeletonComponent } from '../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
-import { StateMessageComponent } from '../../shared/components/state-message/state-message.component';
-import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
-import { ShowSort, collectGenres, filterByGenre, sortShows } from '../../shared/utils/show-utils';
-import { CatalogToolbarComponent } from './catalog-toolbar/catalog-toolbar.component';
+import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
+import { ApiError, toErrorMessage } from '../../../../core/http/api-error';
+import { Show } from '../../../../core/models/tvmaze.model';
+import { ShowCardComponent } from '../../../../shared/components/show-card/show-card.component';
+import { ShowGridSkeletonComponent } from '../../../../shared/components/show-grid-skeleton/show-grid-skeleton.component';
+import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
+import { InfiniteScrollDirective } from '../../../../shared/directives/infinite-scroll.directive';
+import {
+  ShowSort,
+  collectGenres,
+  filterByGenre,
+  sortShows,
+} from '../../../../shared/utils/show-utils';
+import { CatalogToolbarComponent } from '../../components/catalog-toolbar/catalog-toolbar.component';
 
 /** How many cards are revealed per scroll step (an API page has 250 shows). */
 const RENDER_CHUNK = 48;
@@ -25,7 +30,7 @@ const RENDER_CHUNK = 48;
 type CatalogStatus = 'idle' | 'loading' | 'error' | 'complete';
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-catalog-page',
   imports: [
     ShowCardComponent,
     ShowGridSkeletonComponent,
@@ -33,11 +38,11 @@ type CatalogStatus = 'idle' | 'loading' | 'error' | 'complete';
     InfiniteScrollDirective,
     CatalogToolbarComponent,
   ],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss',
+  templateUrl: './catalog-page.component.html',
+  styleUrl: './catalog-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent {
+export class CatalogPageComponent {
   private readonly api = inject(TvmazeApiService);
   private readonly loadRequests = new Subject<void>();
   private nextPage = 0;

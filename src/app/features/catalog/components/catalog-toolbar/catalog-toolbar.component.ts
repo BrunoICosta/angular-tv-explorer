@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 
-import { GenreLabelPipe } from '../../../shared/pipes/genre-label.pipe';
-import { SORT_OPTIONS, ShowSort } from '../../../shared/utils/show-utils';
+import { GenreLabelPipe } from '../../../../shared/pipes/genre-label.pipe';
+import { SORT_OPTIONS, ShowSort } from '../../../../shared/utils/show-utils';
 
 /** Genre filter + sort controls applied to the shows already loaded on the client. */
 @Component({
