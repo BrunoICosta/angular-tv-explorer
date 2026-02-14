@@ -1,0 +1,40 @@
+<section class="seasons" aria-labelledby="seasons-title">
+  <h2 id="seasons-title" class="section-title">Temporadas e episódios</h2>
+
+  @if (orderedSeasons().length) {
+    <ul class="seasons__list">
+      @for (season of orderedSeasons(); track season.id) {
+        @let open = isExpanded(season.id);
+        <li class="season" [class.season--open]="open">
+          <h3 class="season__heading">
+            <button
+              type="button"
+              class="season__toggle"
+              [attr.aria-expanded]="open"
+              [attr.aria-controls]="'season-panel-' + season.id"
+              (click)="toggle(season.id)"
+            >
+              <span class="season__number">Temporada {{ season.number }}</span>
+              <span class="season__meta">
+                @if (season.episodeOrder) {
+                  {{ season.episodeOrder }} episódios
+                }
+                @if (season.premiereDate) {
+                  · {{ season.premiereDate | date: 'yyyy' }}
+                }
+              </span>
+              <app-icon class="season__chevron" name="chevronDown" [size]="18" />
+            </button>
+          </h3>
+          @if (open) {
+            <div class="season__panel" [id]="'season-panel-' + season.id">
+              <app-episode-list [seasonId]="season.id" />
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  } @else {
+    <p class="seasons__empty">A TVMaze ainda não tem temporadas cadastradas para esta série.</p>
+  }
+</section>

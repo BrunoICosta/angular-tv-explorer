@@ -217,6 +217,11 @@ select {
   }
 }
 
+.section-title {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xl);
+}
+
 .chip {
   display: inline-flex;
   align-items: center;

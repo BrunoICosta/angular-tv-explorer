@@ -13,6 +13,12 @@
   }
 }
 
+.detail-sections {
+  display: grid;
+  gap: var(--space-7);
+  margin-top: var(--space-7);
+}
+
 .detail-skeleton {
   display: grid;
   gap: var(--space-5);

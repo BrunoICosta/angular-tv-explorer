@@ -1,0 +1,60 @@
+@let current = state();
+@switch (current.status) {
+  @case ('loading') {
+    <ul class="episodes" aria-hidden="true">
+      @for (row of [1, 2, 3]; track row) {
+        <li class="episode">
+          <div class="skeleton episode__code-skeleton"></div>
+          <div class="episode__body">
+            <div class="skeleton skeleton-line"></div>
+            <div class="skeleton skeleton-line skeleton-line--short"></div>
+          </div>
+        </li>
+      }
+    </ul>
+    <span class="visually-hidden" role="status">Carregando episódios…</span>
+  }
+  @case ('error') {
+    <div class="episodes-error" role="alert">
+      <p>{{ current.message }}</p>
+      <button type="button" class="btn" (click)="retry()">Tentar novamente</button>
+    </div>
+  }
+  @case ('loaded') {
+    @if (current.episodes.length) {
+      <ol class="episodes">
+        @for (episode of current.episodes; track episode.id) {
+          <li class="episode">
+            <span class="episode__code">{{ episodeCode(episode) }}</span>
+            <div class="episode__body">
+              <div class="episode__header">
+                <h4 class="episode__title">{{ episode.name }}</h4>
+                <app-rating [value]="episode.rating.average" />
+              </div>
+              <p class="episode__meta">
+                @if (episode.airdate) {
+                  <time [attr.datetime]="episode.airdate">{{
+                    episode.airdate | date: 'mediumDate'
+                  }}</time>
+                } @else {
+                  <span>Data a definir</span>
+                }
+                @if (episode.runtime) {
+                  <span>{{ episode.runtime }} min</span>
+                }
+              </p>
+              @if (episode.summary) {
+                <div
+                  class="episode__summary prose"
+                  [innerHTML]="episode.summary | sanitizeHtml"
+                ></div>
+              }
+            </div>
+          </li>
+        }
+      </ol>
+    } @else {
+      <p class="episodes-empty">Nenhum episódio cadastrado para esta temporada.</p>
+    }
+  }
+}

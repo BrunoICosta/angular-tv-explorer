@@ -37,6 +37,9 @@
     }
     @case ('loaded') {
       <app-show-hero [show]="current.show" />
+      <div class="detail-sections">
+        <app-season-list [seasons]="current.show._embedded.seasons" />
+      </div>
     }
   }
 </div>

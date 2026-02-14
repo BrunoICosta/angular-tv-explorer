@@ -10,6 +10,7 @@ import { ShowDetails } from '../../../../core/models/tvmaze.model';
 import { formatTitle } from '../../../../core/title/app-title.strategy';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
+import { SeasonListComponent } from '../../components/season-list/season-list.component';
 import { ShowHeroComponent } from '../../components/show-hero/show-hero.component';
 
 type DetailState =
@@ -20,7 +21,13 @@ type DetailState =
 
 @Component({
   selector: 'app-show-detail-page',
-  imports: [RouterLink, IconComponent, StateMessageComponent, ShowHeroComponent],
+  imports: [
+    RouterLink,
+    IconComponent,
+    StateMessageComponent,
+    ShowHeroComponent,
+    SeasonListComponent,
+  ],
   templateUrl: './show-detail-page.component.html',
   styleUrl: './show-detail-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
