@@ -10,6 +10,7 @@ import { ShowDetails } from '../../../../core/models/tvmaze.model';
 import { formatTitle } from '../../../../core/title/app-title.strategy';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
+import { CastListComponent } from '../../components/cast-list/cast-list.component';
 import { SeasonListComponent } from '../../components/season-list/season-list.component';
 import { ShowHeroComponent } from '../../components/show-hero/show-hero.component';
 
@@ -27,6 +28,7 @@ type DetailState =
     StateMessageComponent,
     ShowHeroComponent,
     SeasonListComponent,
+    CastListComponent,
   ],
   templateUrl: './show-detail-page.component.html',
   styleUrl: './show-detail-page.component.scss',

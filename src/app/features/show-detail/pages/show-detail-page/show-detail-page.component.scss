@@ -19,6 +19,21 @@
   margin-top: var(--space-7);
 }
 
+.cast-placeholder {
+  display: grid;
+  gap: var(--space-4);
+
+  &__title {
+    width: 120px;
+    height: 28px;
+  }
+
+  &__row {
+    height: 72px;
+    border-radius: var(--radius-md);
+  }
+}
+
 .detail-skeleton {
   display: grid;
   gap: var(--space-5);

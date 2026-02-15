@@ -1,0 +1,41 @@
+<section aria-labelledby="cast-title">
+  <h2 id="cast-title" class="section-title">Elenco</h2>
+
+  @if (cast().length) {
+    <ul class="cast">
+      @for (member of visibleCast(); track member.person.id + '-' + member.character.id) {
+        <li class="cast__item">
+          @if (member.person.image?.medium ?? member.character.image?.medium; as photo) {
+            <img
+              class="cast__photo"
+              [src]="photo"
+              alt=""
+              width="72"
+              height="72"
+              loading="lazy"
+              decoding="async"
+            />
+          } @else {
+            <span class="cast__photo cast__photo--placeholder" aria-hidden="true">{{
+              initials(member.person.name)
+            }}</span>
+          }
+          <div class="cast__text">
+            <p class="cast__name">{{ member.person.name }}</p>
+            <p class="cast__character">
+              {{ member.voice ? 'Voz de ' : '' }}{{ member.character.name }}
+            </p>
+          </div>
+        </li>
+      }
+    </ul>
+
+    @if (hiddenCount() > 0) {
+      <button type="button" class="btn cast__more" (click)="expand()">
+        Ver elenco completo (+{{ hiddenCount() }})
+      </button>
+    }
+  } @else {
+    <p class="cast__empty">Elenco não informado.</p>
+  }
+</section>

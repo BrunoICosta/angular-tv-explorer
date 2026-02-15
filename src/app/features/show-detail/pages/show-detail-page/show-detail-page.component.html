@@ -39,6 +39,14 @@
       <app-show-hero [show]="current.show" />
       <div class="detail-sections">
         <app-season-list [seasons]="current.show._embedded.seasons" />
+        @defer (on viewport) {
+          <app-cast-list [cast]="current.show._embedded.cast" />
+        } @placeholder {
+          <div class="cast-placeholder" aria-hidden="true">
+            <div class="skeleton cast-placeholder__title"></div>
+            <div class="skeleton cast-placeholder__row"></div>
+          </div>
+        }
       </div>
     }
   }
