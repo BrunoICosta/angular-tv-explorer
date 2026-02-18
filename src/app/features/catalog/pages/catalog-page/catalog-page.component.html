@@ -17,12 +17,14 @@
       (action)="retry()"
     />
   } @else {
-    <app-catalog-toolbar
+    <app-show-filters
       [genres]="genres()"
       [(genre)]="genre"
       [(sort)]="sort"
       [matchCount]="filteredShows().length"
-      [loadedCount]="shows().length"
+      [totalCount]="shows().length"
+      label="Filtros do catálogo"
+      countSuffix="séries carregadas"
     />
 
     @if (filteredShows().length === 0 && status() !== 'loading') {

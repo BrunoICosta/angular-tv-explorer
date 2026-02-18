@@ -1,14 +1,14 @@
-import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
-import { GenreLabelPipe } from '../../../../shared/pipes/genre-label.pipe';
-import { SORT_OPTIONS, ShowSort } from '../../../../shared/utils/show-utils';
+import { GenreLabelPipe } from '../../pipes/genre-label.pipe';
+import { SORT_OPTIONS, ShowSort } from '../../utils/show-utils';
 
-/** Genre filter + sort controls applied to the shows already loaded on the client. */
+/** Genre filter + sort controls for a list of shows that is already on the client. */
 @Component({
-  selector: 'app-catalog-toolbar',
+  selector: 'app-show-filters',
   imports: [GenreLabelPipe],
   template: `
-    <div class="toolbar" role="group" aria-label="Filtros do catálogo">
+    <div class="toolbar" role="group" [attr.aria-label]="label()">
       <div class="field">
         <label for="genre-filter">Gênero</label>
         <select
@@ -29,7 +29,7 @@ import { SORT_OPTIONS, ShowSort } from '../../../../shared/utils/show-utils';
       <div class="field">
         <label for="sort-order">Ordenar por</label>
         <select id="sort-order" class="select" [value]="sort()" (change)="onSortChange($event)">
-          @for (option of sortOptions; track option.value) {
+          @for (option of sortOptions(); track option.value) {
             <option [value]="option.value" [selected]="option.value === sort()">
               {{ option.label }}
             </option>
@@ -38,7 +38,7 @@ import { SORT_OPTIONS, ShowSort } from '../../../../shared/utils/show-utils';
       </div>
 
       <p class="toolbar__count" aria-live="polite">
-        <strong>{{ matchCount() }}</strong> de {{ loadedCount() }} séries carregadas
+        <strong>{{ matchCount() }}</strong> de {{ totalCount() }} {{ countSuffix() }}
       </p>
     </div>
   `,
@@ -77,15 +77,26 @@ import { SORT_OPTIONS, ShowSort } from '../../../../shared/utils/show-utils';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CatalogToolbarComponent {
+export class ShowFiltersComponent {
   readonly genres = input.required<readonly string[]>();
   readonly matchCount = input.required<number>();
-  readonly loadedCount = input.required<number>();
+  readonly totalCount = input.required<number>();
+  readonly label = input('Filtros');
+  readonly countSuffix = input('séries');
+  /** Label of the "no sorting" option (the list's natural order). */
+  readonly defaultSortLabel = input<string>();
 
   readonly genre = model<string | null>(null);
   readonly sort = model<ShowSort>('default');
 
-  protected readonly sortOptions = SORT_OPTIONS;
+  protected readonly sortOptions = computed(() => {
+    const defaultLabel = this.defaultSortLabel();
+    return defaultLabel
+      ? SORT_OPTIONS.map((option) =>
+          option.value === 'default' ? { ...option, label: defaultLabel } : option,
+        )
+      : SORT_OPTIONS;
+  });
 
   protected onGenreChange(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;

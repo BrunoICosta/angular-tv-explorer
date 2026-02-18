@@ -22,7 +22,7 @@ import {
   filterByGenre,
   sortShows,
 } from '../../../../shared/utils/show-utils';
-import { CatalogToolbarComponent } from '../../components/catalog-toolbar/catalog-toolbar.component';
+import { ShowFiltersComponent } from '../../../../shared/components/show-filters/show-filters.component';
 
 /** How many cards are revealed per scroll step (an API page has 250 shows). */
 const RENDER_CHUNK = 48;
@@ -36,7 +36,7 @@ type CatalogStatus = 'idle' | 'loading' | 'error' | 'complete';
     ShowGridSkeletonComponent,
     StateMessageComponent,
     InfiniteScrollDirective,
-    CatalogToolbarComponent,
+    ShowFiltersComponent,
   ],
   templateUrl: './catalog-page.component.html',
   styleUrl: './catalog-page.component.scss',
