@@ -36,7 +36,9 @@
       />
     }
     @case ('loaded') {
-      <app-show-hero [show]="current.show" />
+      <app-show-hero [show]="current.show">
+        <app-favorite-button [show]="current.show" />
+      </app-show-hero>
       <div class="detail-sections">
         <app-season-list [seasons]="current.show._embedded.seasons" />
         @defer (on viewport) {

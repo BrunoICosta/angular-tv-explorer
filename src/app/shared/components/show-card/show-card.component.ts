@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { ShowSummary } from '../../../core/models/tvmaze.model';
 import { yearOf } from '../../utils/show-utils';
 import { GenreLabelPipe } from '../../pipes/genre-label.pipe';
+import { FavoriteButtonComponent } from '../favorite-button/favorite-button.component';
 import { RatingComponent } from '../rating/rating.component';
 
 @Component({
   selector: 'app-show-card',
-  imports: [RouterLink, RatingComponent, GenreLabelPipe],
+  imports: [RouterLink, RatingComponent, GenreLabelPipe, FavoriteButtonComponent],
   templateUrl: './show-card.component.html',
   styleUrl: './show-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

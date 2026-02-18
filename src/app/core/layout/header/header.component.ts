@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { FavoritesStore } from '../../favorites/favorites.store';
 import { IconComponent, IconName } from '../../../shared/components/icon/icon.component';
 
 interface NavItem {
@@ -18,6 +19,8 @@ interface NavItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+  protected readonly favoritesCount = inject(FavoritesStore).count;
+
   protected readonly navItems: readonly NavItem[] = [
     { label: 'Catálogo', path: '/', icon: 'grid', exact: true },
     { label: 'Buscar', path: '/buscar', icon: 'search', exact: false },

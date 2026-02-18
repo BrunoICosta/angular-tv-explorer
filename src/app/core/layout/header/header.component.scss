@@ -81,6 +81,27 @@
   }
 }
 
+.nav__badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  @media (max-width: 639px) {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    min-width: 18px;
+    height: 18px;
+  }
+}
+
 // On small screens only icons are shown; labels stay available to screen readers.
 @media (max-width: 639px) {
   .brand__name {

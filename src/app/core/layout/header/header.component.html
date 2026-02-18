@@ -18,6 +18,12 @@
             >
               <app-icon [name]="item.icon" [size]="18" />
               <span class="nav__label">{{ item.label }}</span>
+              @if (item.path === '/favoritos' && favoritesCount() > 0) {
+                <span class="nav__badge">
+                  {{ favoritesCount() }}
+                  <span class="visually-hidden">séries salvas</span>
+                </span>
+              }
             </a>
           </li>
         }

@@ -8,6 +8,7 @@ import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
 import { ApiError, toErrorMessage } from '../../../../core/http/api-error';
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
 import { formatTitle } from '../../../../core/title/app-title.strategy';
+import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
 import { CastListComponent } from '../../components/cast-list/cast-list.component';
@@ -29,6 +30,7 @@ type DetailState =
     ShowHeroComponent,
     SeasonListComponent,
     CastListComponent,
+    FavoriteButtonComponent,
   ],
   templateUrl: './show-detail-page.component.html',
   styleUrl: './show-detail-page.component.scss',
