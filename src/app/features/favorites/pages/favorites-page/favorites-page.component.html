@@ -1,0 +1,56 @@
+<section class="container page">
+  <header class="page-header favorites-header">
+    <div>
+      <p class="eyebrow">Sua lista</p>
+      <h1>Favoritos</h1>
+      <p>Séries salvas neste navegador. Elas ficam guardadas mesmo depois de fechar a aba.</p>
+    </div>
+
+    @if (favorites().length) {
+      <div class="clear-actions">
+        @if (confirmingClear()) {
+          <span class="clear-actions__question" role="status">Remover todas?</span>
+          <button type="button" class="btn btn--primary" (click)="confirmClear()">
+            Sim, limpar
+          </button>
+          <button type="button" class="btn btn--ghost" (click)="cancelClear()">Cancelar</button>
+        } @else {
+          <button type="button" class="btn btn--ghost" (click)="requestClear()">
+            Limpar favoritos
+          </button>
+        }
+      </div>
+    }
+  </header>
+
+  @if (favorites().length) {
+    <app-show-filters
+      [genres]="genres()"
+      [(genre)]="genre"
+      [(sort)]="sort"
+      [matchCount]="visible().length"
+      [totalCount]="favorites().length"
+      label="Filtros dos favoritos"
+      countSuffix="favoritos"
+      defaultSortLabel="Adicionados recentemente"
+    />
+
+    <ul class="show-grid" aria-label="Séries favoritas">
+      @for (show of visible(); track show.id) {
+        <li><app-show-card [show]="show" /></li>
+      } @empty {
+        <li class="no-match">Nenhum favorito com esse gênero.</li>
+      }
+    </ul>
+  } @else {
+    <div class="empty">
+      <div class="empty__art"><app-icon name="heart" [size]="32" /></div>
+      <h2>Nenhuma série salva ainda</h2>
+      <p>Toque no coração de qualquer série para guardá-la aqui.</p>
+      <div class="empty__actions">
+        <a class="btn btn--primary" routerLink="/">Explorar catálogo</a>
+        <a class="btn" routerLink="/buscar">Buscar uma série</a>
+      </div>
+    </div>
+  }
+</section>
