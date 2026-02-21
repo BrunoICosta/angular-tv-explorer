@@ -1,0 +1,83 @@
+<section class="container page">
+  <header class="page-header">
+    <p class="eyebrow">Agenda</p>
+    <h1>{{ isToday() ? 'Agenda de hoje' : 'Agenda do dia' }}</h1>
+    <p>
+      O que vai ao ar em <strong>{{ countryName() }}</strong> em
+      <time [attr.datetime]="date()">{{ date() | date: 'fullDate' }}</time
+      >, horário local da emissora.
+    </p>
+  </header>
+
+  <div class="controls" role="group" aria-label="Filtros da agenda">
+    <div class="field">
+      <label for="schedule-country">País</label>
+      <select id="schedule-country" class="select" (change)="onCountryChange($event)">
+        @for (option of countries; track option.code) {
+          <option [value]="option.code" [selected]="option.code === country()">
+            {{ option.name }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="schedule-date">Data</label>
+      <input
+        id="schedule-date"
+        class="input"
+        type="date"
+        [value]="date()"
+        (change)="onDateChange($event)"
+      />
+    </div>
+
+    <div class="controls__days">
+      <button type="button" class="btn" (click)="shiftDay(-1)">← Anterior</button>
+      <button type="button" class="btn" [disabled]="isToday()" (click)="goToToday()">Hoje</button>
+      <button type="button" class="btn" (click)="shiftDay(1)">Próximo →</button>
+    </div>
+  </div>
+
+  @let current = state();
+  @switch (current.status) {
+    @case ('loading') {
+      <div class="timeline-skeleton" aria-hidden="true">
+        @for (row of [1, 2, 3, 4]; track row) {
+          <div class="skeleton timeline-skeleton__row"></div>
+        }
+      </div>
+      <span class="visually-hidden" role="status">Carregando agenda…</span>
+    }
+    @case ('error') {
+      <app-state-message
+        variant="error"
+        icon="refresh"
+        title="Não foi possível carregar a agenda"
+        [description]="current.message"
+        actionLabel="Tentar novamente"
+        (action)="retry()"
+      />
+    }
+    @case ('loaded') {
+      @if (current.total) {
+        <p class="summary" role="status">
+          {{ current.total }} episódio(s) em {{ current.slots.length }} horário(s)
+        </p>
+        <ol class="timeline">
+          @for (slot of current.slots; track slot.time) {
+            <li>
+              <app-schedule-slot [slot]="slot" [past]="isPast(slot)" />
+            </li>
+          }
+        </ol>
+      } @else {
+        <app-state-message
+          icon="calendar"
+          title="Nada na grade para este dia"
+          description="A TVMaze não tem episódios cadastrados para esse país e data. Experimente outro país ou dia."
+        />
+      }
+    }
+  }
+</section>

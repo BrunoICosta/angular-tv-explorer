@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./features/show-detail/show-detail.routes').then((m) => m.SHOW_DETAIL_ROUTES),
   },
   {
+    path: 'agenda',
+    loadChildren: () =>
+      import('./features/schedule/schedule.routes').then((m) => m.SCHEDULE_ROUTES),
+  },
+  {
     path: 'favoritos',
     loadChildren: () =>
       import('./features/favorites/favorites.routes').then((m) => m.FAVORITES_ROUTES),

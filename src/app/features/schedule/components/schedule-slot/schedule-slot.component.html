@@ -1,0 +1,44 @@
+<article class="slot">
+  <h2 class="slot__time">
+    <span class="visually-hidden">Horário</span>
+    {{ slot().time || 'Sem horário' }}
+    @if (past()) {
+      <span class="slot__badge">Já exibido</span>
+    }
+  </h2>
+
+  <ul class="slot__list">
+    @for (episode of slot().episodes; track episode.id) {
+      <li class="item">
+        <a class="item__link" [routerLink]="['/series', episode.show.id]">
+          @if (episode.show.image?.medium; as poster) {
+            <img
+              class="item__poster"
+              [src]="poster"
+              alt=""
+              width="56"
+              height="84"
+              loading="lazy"
+              decoding="async"
+            />
+          } @else {
+            <span class="item__poster item__poster--empty" aria-hidden="true"></span>
+          }
+          <span class="item__text">
+            <span class="item__show">{{ episode.show.name }}</span>
+            <span class="item__episode"> {{ episodeCode(episode) }} · {{ episode.name }} </span>
+            <span class="item__meta">
+              @if (channel(episode); as name) {
+                <span>{{ name }}</span>
+              }
+              @if (episode.runtime) {
+                <span>{{ episode.runtime }} min</span>
+              }
+            </span>
+          </span>
+        </a>
+        <app-favorite-button [show]="episode.show" [compact]="true" />
+      </li>
+    }
+  </ul>
+</article>
