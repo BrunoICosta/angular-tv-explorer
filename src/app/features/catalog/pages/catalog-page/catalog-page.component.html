@@ -5,40 +5,40 @@
     <p>Milhares de títulos do catálogo da TVMaze, carregados conforme você rola a página.</p>
   </header>
 
-  @if (isInitialLoad()) {
+  @if (store.isInitialLoad()) {
     <app-show-grid-skeleton [count]="18" />
-  } @else if (status() === 'error' && shows().length === 0) {
+  } @else if (store.status() === 'error' && store.shows().length === 0) {
     <app-state-message
       variant="error"
       icon="refresh"
       title="Não conseguimos carregar o catálogo"
-      [description]="errorMessage()"
+      [description]="store.errorMessage()"
       actionLabel="Tentar novamente"
-      (action)="retry()"
+      (action)="store.retry()"
     />
   } @else {
     <app-show-filters
-      [genres]="genres()"
-      [(genre)]="genre"
-      [(sort)]="sort"
-      [matchCount]="filteredShows().length"
-      [totalCount]="shows().length"
+      [genres]="store.genres()"
+      [(genre)]="store.genre"
+      [(sort)]="store.sort"
+      [matchCount]="store.filteredShows().length"
+      [totalCount]="store.shows().length"
       label="Filtros do catálogo"
       countSuffix="séries carregadas"
     />
 
-    @if (filteredShows().length === 0 && status() !== 'loading') {
+    @if (store.filteredShows().length === 0 && store.status() !== 'loading') {
       <app-state-message
         icon="search"
         title="Nenhuma série com esse gênero por aqui"
         description="Role para carregar mais páginas do catálogo ou escolha outro gênero."
         actionLabel="Limpar filtro"
-        (action)="genre.set(null)"
+        (action)="store.genre.set(null)"
       />
     }
 
     <ul class="show-grid" aria-label="Séries do catálogo">
-      @for (show of visibleShows(); track show.id) {
+      @for (show of store.visibleShows(); track show.id) {
         <li>
           <app-show-card [show]="show" />
         </li>
@@ -48,18 +48,18 @@
     <div
       class="sentinel"
       appInfiniteScroll
-      [infiniteScrollDisabled]="scrollDisabled()"
-      (appInfiniteScroll)="onScrolled()"
+      [infiniteScrollDisabled]="store.scrollDisabled()"
+      (appInfiniteScroll)="store.loadMore()"
     ></div>
 
-    @if (status() === 'loading') {
+    @if (store.status() === 'loading') {
       <app-show-grid-skeleton class="more-skeleton" [count]="6" />
-    } @else if (status() === 'error') {
+    } @else if (store.status() === 'error') {
       <div class="inline-error" role="alert">
-        <p>{{ errorMessage() }}</p>
-        <button type="button" class="btn" (click)="retry()">Tentar novamente</button>
+        <p>{{ store.errorMessage() }}</p>
+        <button type="button" class="btn" (click)="store.retry()">Tentar novamente</button>
       </div>
-    } @else if (!hasMore()) {
+    } @else if (!store.hasMore()) {
       <p class="end-of-list">Você chegou ao fim do catálogo.</p>
     }
   }
