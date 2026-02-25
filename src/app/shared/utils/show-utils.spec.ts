@@ -72,6 +72,7 @@ describe('show-utils', () => {
 
   it('strips html into plain text', () => {
     expect(stripHtml('<p><b>Dark</b> is&nbsp;a &amp; show</p>')).toBe('Dark is a & show');
+    expect(stripHtml('<p>Hi<script>alert(1)</script></p>')).toBe('Hi');
     expect(stripHtml(null)).toBe('');
   });
 });

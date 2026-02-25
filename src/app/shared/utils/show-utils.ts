@@ -102,6 +102,7 @@ export function stripHtml(html: string | null | undefined): string {
     return '';
   }
   return html
+    .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, ' ')
     .replace(/<[^>]*>/g, ' ')
     .replace(/&nbsp;/g, ' ')
     .replace(/&amp;/g, '&')

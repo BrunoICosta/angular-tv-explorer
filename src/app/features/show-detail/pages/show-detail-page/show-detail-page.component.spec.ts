@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
@@ -71,6 +71,9 @@ describe('ShowDetailPageComponent', () => {
     expect(page.textContent).toContain('Mistério');
     expect(page.textContent).toContain('2017–2020');
     expect(TestBed.inject(Title).getTitle()).toBe('Dark · TV Explorer');
+    expect(TestBed.inject(Meta).getTag('name="description"')?.content).toBe(
+      'Dark is a family saga',
+    );
   });
 
   it('shows a not-found state for 404', async () => {

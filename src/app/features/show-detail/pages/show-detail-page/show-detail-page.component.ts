@@ -1,19 +1,24 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { Subject, catchError, map, of, startWith, switchMap } from 'rxjs';
 
 import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
 import { ApiError, toErrorMessage } from '../../../../core/http/api-error';
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
-import { formatTitle } from '../../../../core/title/app-title.strategy';
+import { DEFAULT_DESCRIPTION, formatTitle } from '../../../../core/title/app-title.strategy';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
+import { stripHtml } from '../../../../shared/utils/show-utils';
 import { CastListComponent } from '../../components/cast-list/cast-list.component';
 import { SeasonListComponent } from '../../components/season-list/season-list.component';
 import { ShowHeroComponent } from '../../components/show-hero/show-hero.component';
+
+function truncate(text: string, max: number): string {
+  return text.length <= max ? text : `${text.slice(0, max - 1).trimEnd()}…`;
+}
 
 type DetailState =
   | { status: 'loading' }
@@ -39,6 +44,7 @@ type DetailState =
 export class ShowDetailPageComponent {
   private readonly api = inject(TvmazeApiService);
   private readonly title = inject(Title);
+  private readonly meta = inject(Meta);
   private readonly reload = new Subject<void>();
 
   /** Bound from the `:id` route param through `withComponentInputBinding()`. */
@@ -62,6 +68,11 @@ export class ShowDetailPageComponent {
       const state = this.state();
       if (state.status === 'loaded') {
         this.title.setTitle(formatTitle(state.show.name));
+        const summary = stripHtml(state.show.summary);
+        this.meta.updateTag({
+          name: 'description',
+          content: summary ? truncate(summary, 160) : DEFAULT_DESCRIPTION,
+        });
       }
     });
   }
