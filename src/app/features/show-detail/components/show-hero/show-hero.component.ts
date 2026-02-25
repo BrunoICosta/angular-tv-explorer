@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
@@ -26,7 +27,7 @@ const DAY_LABELS: Readonly<Record<string, string>> = {
 
 @Component({
   selector: 'app-show-hero',
-  imports: [IconComponent, RatingComponent, GenreLabelPipe, SanitizeHtmlPipe],
+  imports: [NgOptimizedImage, IconComponent, RatingComponent, GenreLabelPipe, SanitizeHtmlPipe],
   templateUrl: './show-hero.component.html',
   styleUrl: './show-hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

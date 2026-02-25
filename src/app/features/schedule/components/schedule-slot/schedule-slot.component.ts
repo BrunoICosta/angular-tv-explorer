@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -7,7 +8,7 @@ import { ScheduleSlot } from '../../data-access/schedule.service';
 
 @Component({
   selector: 'app-schedule-slot',
-  imports: [RouterLink, FavoriteButtonComponent],
+  imports: [NgOptimizedImage, RouterLink, FavoriteButtonComponent],
   templateUrl: './schedule-slot.component.html',
   styleUrl: './schedule-slot.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

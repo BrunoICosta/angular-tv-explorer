@@ -6,7 +6,7 @@
 
   <div class="hero__poster">
     @if (s.image?.medium; as poster) {
-      <img [src]="poster" [alt]="'Pôster de ' + s.name" width="280" height="420" />
+      <img [ngSrc]="poster" [alt]="'Pôster de ' + s.name" width="280" height="420" priority />
     } @else {
       <div class="hero__poster-placeholder" aria-hidden="true">
         <app-icon name="tv" [size]="48" />

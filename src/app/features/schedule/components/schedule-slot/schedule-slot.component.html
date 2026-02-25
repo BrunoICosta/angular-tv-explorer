@@ -12,15 +12,7 @@
       <li class="item">
         <a class="item__link" [routerLink]="['/series', episode.show.id]">
           @if (episode.show.image?.medium; as poster) {
-            <img
-              class="item__poster"
-              [src]="poster"
-              alt=""
-              width="56"
-              height="84"
-              loading="lazy"
-              decoding="async"
-            />
+            <img class="item__poster" [ngSrc]="poster" alt="" width="44" height="66" />
           } @else {
             <span class="item__poster item__poster--empty" aria-hidden="true"></span>
           }

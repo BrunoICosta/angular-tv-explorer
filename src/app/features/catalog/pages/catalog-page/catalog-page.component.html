@@ -38,9 +38,9 @@
     }
 
     <ul class="show-grid" aria-label="Séries do catálogo">
-      @for (show of store.visibleShows(); track show.id) {
+      @for (show of store.visibleShows(); track show.id; let i = $index) {
         <li>
-          <app-show-card [show]="show" />
+          <app-show-card [show]="show" [priority]="i < 6" />
         </li>
       }
     </ul>

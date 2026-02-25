@@ -6,15 +6,7 @@
       @for (member of visibleCast(); track member.person.id + '-' + member.character.id) {
         <li class="cast__item">
           @if (member.person.image?.medium ?? member.character.image?.medium; as photo) {
-            <img
-              class="cast__photo"
-              [src]="photo"
-              alt=""
-              width="72"
-              height="72"
-              loading="lazy"
-              decoding="async"
-            />
+            <img class="cast__photo" [ngSrc]="photo" alt="" width="56" height="79" />
           } @else {
             <span class="cast__photo cast__photo--placeholder" aria-hidden="true">{{
               initials(member.person.name)

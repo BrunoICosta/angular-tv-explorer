@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -9,13 +10,15 @@ import { RatingComponent } from '../rating/rating.component';
 
 @Component({
   selector: 'app-show-card',
-  imports: [RouterLink, RatingComponent, GenreLabelPipe, FavoriteButtonComponent],
+  imports: [NgOptimizedImage, RouterLink, RatingComponent, GenreLabelPipe, FavoriteButtonComponent],
   templateUrl: './show-card.component.html',
   styleUrl: './show-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowCardComponent {
   readonly show = input.required<ShowSummary>();
+  /** Set for above-the-fold cards so the LCP image is not lazy loaded. */
+  readonly priority = input(false);
 
   protected readonly year = computed(() => yearOf(this.show().premiered));
   protected readonly genres = computed(() => this.show().genres.slice(0, 2));

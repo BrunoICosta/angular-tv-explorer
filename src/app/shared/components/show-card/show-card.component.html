@@ -2,7 +2,7 @@
   <a class="card__link" [routerLink]="['/series', show().id]">
     <div class="card__poster">
       @if (show().image?.medium; as poster) {
-        <img [src]="poster" [alt]="'Pôster de ' + show().name" loading="lazy" decoding="async" />
+        <img [ngSrc]="poster" [alt]="'Pôster de ' + show().name" fill [priority]="priority()" />
       } @else {
         <div class="card__placeholder" aria-hidden="true">{{ initials() }}</div>
       }
