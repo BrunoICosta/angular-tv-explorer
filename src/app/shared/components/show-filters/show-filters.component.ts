@@ -45,7 +45,7 @@ import { SORT_OPTIONS, ShowSort } from '../../utils/show-utils';
   styles: `
     .toolbar {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       align-items: end;
       gap: var(--space-3);
       margin-bottom: var(--space-5);
@@ -53,6 +53,10 @@ import { SORT_OPTIONS, ShowSort } from '../../utils/show-utils';
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
       background: var(--color-bg-elevated);
+
+      @media (min-width: 480px) {
+        grid-template-columns: 1fr 1fr;
+      }
 
       @media (min-width: 768px) {
         grid-template-columns: minmax(200px, 260px) minmax(200px, 240px) 1fr;

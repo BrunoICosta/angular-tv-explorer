@@ -33,9 +33,13 @@
     </div>
 
     <div class="controls__days">
-      <button type="button" class="btn" (click)="shiftDay(-1)">← Anterior</button>
+      <button type="button" class="btn" (click)="shiftDay(-1)">
+        <span aria-hidden="true">←</span> Dia anterior
+      </button>
       <button type="button" class="btn" [disabled]="isToday()" (click)="goToToday()">Hoje</button>
-      <button type="button" class="btn" (click)="shiftDay(1)">Próximo →</button>
+      <button type="button" class="btn" (click)="shiftDay(1)">
+        Próximo dia <span aria-hidden="true">→</span>
+      </button>
     </div>
   </div>
 
