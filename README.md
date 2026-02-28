@@ -1,5 +1,10 @@
 # TV Explorer
 
+[![CI](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/ci.yml/badge.svg)](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/ci.yml)
+[![Deploy](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/deploy.yml)
+![Angular](https://img.shields.io/badge/Angular-20-dd0031?logo=angular)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
 Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze](https://www.tvmaze.com/api) (sem chave). Navegue por milhares de séries com rolagem infinita, filtre por gênero e ordene por nota, busque com RxJS enquanto digita, veja sinopse, temporadas, episódios e elenco de cada título, salve favoritas no navegador e consulte a agenda do dia por país. O projeto usa componentes standalone, Signals, o novo control flow (`@if`/`@for`/`@switch`/`@defer`), lazy loading em todas as features e um design escuro próprio, sem biblioteca de UI.
 
 **Demo:** https://brunoicosta.github.io/angular-tv-explorer/
