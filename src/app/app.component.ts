@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { FooterComponent } from './core/layout/footer/footer.component';
 import { HeaderComponent } from './core/layout/header/header.component';
@@ -7,9 +8,9 @@ import { ToastsComponent } from './core/layout/toasts/toasts.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, ToastsComponent],
+  imports: [RouterOutlet, TranslocoPipe, HeaderComponent, FooterComponent, ToastsComponent],
   template: `
-    <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+    <a class="skip-link" href="#main-content">{{ 'shell.skipLink' | transloco }}</a>
     <app-header />
     <main id="main-content" tabindex="-1">
       <router-outlet />

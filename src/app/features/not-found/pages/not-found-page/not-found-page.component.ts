@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-not-found-page',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoPipe],
   template: `
     <section class="container page not-found">
-      <p class="eyebrow">Erro 404</p>
-      <h1>Essa página saiu do ar</h1>
-      <p>O endereço que você tentou acessar não existe ou foi removido.</p>
-      <a class="btn btn--primary" routerLink="/">Voltar ao catálogo</a>
+      <p class="eyebrow">{{ 'notFound.eyebrow' | transloco }}</p>
+      <h1>{{ 'notFound.title' | transloco }}</h1>
+      <p>{{ 'notFound.description' | transloco }}</p>
+      <a class="btn btn--primary" routerLink="/">{{ 'common.backToCatalog' | transloco }}</a>
     </section>
   `,
   styles: `

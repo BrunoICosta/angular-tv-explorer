@@ -42,6 +42,10 @@
   }
 }
 
+.nav {
+  margin-left: auto;
+}
+
 .nav__list {
   display: flex;
   gap: var(--space-1);

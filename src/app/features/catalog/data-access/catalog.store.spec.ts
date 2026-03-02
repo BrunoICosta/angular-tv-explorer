@@ -85,11 +85,11 @@ describe('CatalogStore', () => {
   });
 
   it('exposes errors and retries', () => {
-    api.getShows.and.returnValue(throwError(() => new ApiError(500, 'Instável')));
+    api.getShows.and.returnValue(throwError(() => new ApiError(500)));
     store.init();
 
     expect(store.status()).toBe('error');
-    expect(store.errorMessage()).toBe('Instável');
+    expect(store.errorKey()).toBe('errors.server');
 
     api.getShows.and.returnValue(new Subject<Show[]>());
     store.retry();

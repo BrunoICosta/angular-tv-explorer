@@ -58,7 +58,7 @@
         variant="error"
         icon="refresh"
         title="Não foi possível carregar a agenda"
-        [description]="current.message"
+        [description]="current.messageKey | transloco"
         actionLabel="Tentar novamente"
         (action)="retry()"
       />

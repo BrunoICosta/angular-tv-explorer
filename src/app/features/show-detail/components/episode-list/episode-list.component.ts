@@ -2,8 +2,9 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Subject, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { TranslocoPipe } from '@jsverse/transloco';
 
-import { toErrorMessage } from '../../../../core/http/api-error';
+import { toErrorKey } from '../../../../core/http/api-error';
 import { Episode } from '../../../../core/models/tvmaze.model';
 import { RatingComponent } from '../../../../shared/components/rating/rating.component';
 import { SanitizeHtmlPipe } from '../../../../shared/pipes/sanitize-html.pipe';
@@ -12,11 +13,11 @@ import { SeasonEpisodesService } from '../../data-access/season-episodes.service
 type EpisodesState =
   | { status: 'loading' }
   | { status: 'loaded'; episodes: Episode[] }
-  | { status: 'error'; message: string };
+  | { status: 'error'; messageKey: string };
 
 @Component({
   selector: 'app-episode-list',
-  imports: [DatePipe, RatingComponent, SanitizeHtmlPipe],
+  imports: [TranslocoPipe, DatePipe, RatingComponent, SanitizeHtmlPipe],
   templateUrl: './episode-list.component.html',
   styleUrl: './episode-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,7 +39,7 @@ export class EpisodeListComponent {
               startWith<EpisodesState>({ status: 'loading' }),
               catchError((error: unknown) => {
                 this.episodesService.invalidate(id);
-                return of<EpisodesState>({ status: 'error', message: toErrorMessage(error) });
+                return of<EpisodesState>({ status: 'error', messageKey: toErrorKey(error) });
               }),
             ),
           ),

@@ -1,19 +1,23 @@
 import { DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
+
+import { LanguageService } from '../../../core/i18n/language.service';
 
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-rating',
-  imports: [IconComponent, DecimalPipe],
+  imports: [IconComponent, DecimalPipe, TranslocoPipe],
   template: `
     @if (value(); as rating) {
-      <span class="rating" [attr.aria-label]="'Nota ' + (rating | number: '1.1-1') + ' de 10'">
+      @let formatted = rating | number: '1.1-1' : locale();
+      <span class="rating" [attr.aria-label]="'common.rating' | transloco: { value: formatted }">
         <app-icon name="star" [size]="14" [filled]="true" />
-        {{ rating | number: '1.1-1' }}
+        {{ formatted }}
       </span>
     } @else {
-      <span class="rating rating--empty" aria-label="Sem nota">—</span>
+      <span class="rating rating--empty" [attr.aria-label]="'common.noRating' | transloco">—</span>
     }
   `,
   styles: `
@@ -38,4 +42,6 @@ import { IconComponent } from '../icon/icon.component';
 })
 export class RatingComponent {
   readonly value = input<number | null>(null);
+
+  protected readonly locale = inject(LanguageService).locale;
 }

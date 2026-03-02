@@ -1,11 +1,11 @@
 <header class="header">
   <div class="container header__inner">
-    <a class="brand" routerLink="/" aria-label="TV Explorer — página inicial">
+    <a class="brand" routerLink="/" [attr.aria-label]="'shell.home' | transloco">
       <span class="brand__logo"><app-icon name="tv" [size]="18" /></span>
       <span class="brand__name">TV<span>Explorer</span></span>
     </a>
 
-    <nav class="nav" aria-label="Navegação principal">
+    <nav class="nav" [attr.aria-label]="'nav.label' | transloco">
       <ul class="nav__list">
         @for (item of navItems; track item.path) {
           <li>
@@ -17,11 +17,11 @@
               ariaCurrentWhenActive="page"
             >
               <app-icon [name]="item.icon" [size]="18" />
-              <span class="nav__label">{{ item.label }}</span>
+              <span class="nav__label">{{ item.labelKey | transloco }}</span>
               @if (item.path === '/favoritos' && favoritesCount() > 0) {
                 <span class="nav__badge">
                   {{ favoritesCount() }}
-                  <span class="visually-hidden">séries salvas</span>
+                  <span class="visually-hidden">{{ 'nav.savedShows' | transloco }}</span>
                 </span>
               }
             </a>
@@ -29,5 +29,7 @@
         }
       </ul>
     </nav>
+
+    <app-language-switcher />
   </div>
 </header>

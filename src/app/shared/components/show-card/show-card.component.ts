@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { ShowSummary } from '../../../core/models/tvmaze.model';
 import { yearOf } from '../../utils/show-utils';
@@ -10,7 +11,14 @@ import { RatingComponent } from '../rating/rating.component';
 
 @Component({
   selector: 'app-show-card',
-  imports: [NgOptimizedImage, RouterLink, RatingComponent, GenreLabelPipe, FavoriteButtonComponent],
+  imports: [
+    NgOptimizedImage,
+    RouterLink,
+    TranslocoPipe,
+    RatingComponent,
+    GenreLabelPipe,
+    FavoriteButtonComponent,
+  ],
   templateUrl: './show-card.component.html',
   styleUrl: './show-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

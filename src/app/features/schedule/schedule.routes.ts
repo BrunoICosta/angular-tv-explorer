@@ -5,7 +5,7 @@ import { ScheduleService } from './data-access/schedule.service';
 export const SCHEDULE_ROUTES: Routes = [
   {
     path: '',
-    title: 'Agenda de hoje',
+    title: 'titles.schedule',
     providers: [ScheduleService],
     loadComponent: () =>
       import('./pages/schedule-page/schedule-page.component').then((m) => m.SchedulePageComponent),

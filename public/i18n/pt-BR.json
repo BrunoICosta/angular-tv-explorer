@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "description": "Explore séries de TV, busque títulos, veja temporadas, elenco e a agenda do dia com dados da TVMaze."
+  },
+  "titles": {
+    "catalog": "Catálogo",
+    "search": "Buscar",
+    "showDetail": "Detalhes da série",
+    "favorites": "Favoritos",
+    "schedule": "Agenda de hoje",
+    "notFound": "Página não encontrada"
+  },
+  "shell": {
+    "skipLink": "Pular para o conteúdo",
+    "home": "TV Explorer — página inicial"
+  },
+  "nav": {
+    "label": "Navegação principal",
+    "catalog": "Catálogo",
+    "search": "Buscar",
+    "schedule": "Agenda",
+    "favorites": "Favoritos",
+    "savedShows": "séries salvas"
+  },
+  "language": {
+    "label": "Idioma"
+  },
+  "footer": {
+    "dataBy": "Dados fornecidos por",
+    "underLicense": "sob licença",
+    "madeBy": "Feito por"
+  },
+  "toasts": {
+    "close": "Fechar aviso"
+  },
+  "errors": {
+    "network": "Não foi possível conectar à API. Verifique sua conexão.",
+    "notFound": "Conteúdo não encontrado.",
+    "rateLimit": "Muitas requisições em pouco tempo. Tente novamente em instantes.",
+    "server": "O serviço da TVMaze está instável no momento.",
+    "generic": "Algo deu errado ao carregar os dados."
+  },
+  "common": {
+    "retry": "Tentar novamente",
+    "loadingShows": "Carregando séries…",
+    "noRating": "Sem nota",
+    "rating": "Nota {{value}} de 10",
+    "poster": "Pôster de {{name}}",
+    "opensInNewTab": "(abre em nova aba)",
+    "backToCatalog": "Voltar ao catálogo"
+  },
+  "favorite": {
+    "add": "Adicionar {{name}} aos favoritos",
+    "remove": "Remover {{name}} dos favoritos",
+    "active": "Nos favoritos",
+    "inactive": "Favoritar"
+  },
+  "filters": {
+    "catalogLabel": "Filtros do catálogo",
+    "favoritesLabel": "Filtros dos favoritos",
+    "genre": "Gênero",
+    "allGenres": "Todos os gêneros",
+    "sortBy": "Ordenar por",
+    "countLoaded": "de {{total}} séries carregadas",
+    "countFavorites": "de {{total}} favoritos",
+    "sort": {
+      "default": "Ordem do catálogo",
+      "recent": "Adicionados recentemente",
+      "rating-desc": "Maior nota",
+      "rating-asc": "Menor nota",
+      "name": "Nome (A–Z)"
+    }
+  },
+  "notFound": {
+    "eyebrow": "Erro 404",
+    "title": "Essa página saiu do ar",
+    "description": "O endereço que você tentou acessar não existe ou foi removido."
+  },
+  "genres": {
+    "Action": "Ação",
+    "Adult": "Adulto",
+    "Adventure": "Aventura",
+    "Anime": "Anime",
+    "Children": "Infantil",
+    "Comedy": "Comédia",
+    "Crime": "Crime",
+    "DIY": "Faça você mesmo",
+    "Drama": "Drama",
+    "Espionage": "Espionagem",
+    "Family": "Família",
+    "Fantasy": "Fantasia",
+    "Food": "Culinária",
+    "History": "História",
+    "Horror": "Terror",
+    "Legal": "Jurídico",
+    "Medical": "Medicina",
+    "Music": "Música",
+    "Mystery": "Mistério",
+    "Nature": "Natureza",
+    "Romance": "Romance",
+    "Science-Fiction": "Ficção científica",
+    "Sports": "Esportes",
+    "Supernatural": "Sobrenatural",
+    "Thriller": "Suspense",
+    "Travel": "Viagem",
+    "War": "Guerra",
+    "Western": "Faroeste"
+  }
+}

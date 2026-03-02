@@ -1,20 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-footer',
+  imports: [TranslocoPipe],
   template: `
     <footer class="footer">
       <div class="container footer__inner">
         <p>
-          Dados fornecidos por
+          {{ 'footer.dataBy' | transloco }}
           <a href="https://www.tvmaze.com/api" target="_blank" rel="noopener">TVMaze</a>
-          sob licença
+          {{ 'footer.underLicense' | transloco }}
           <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"
             >CC BY-SA 4.0</a
           >.
         </p>
         <p>
-          Feito por
+          {{ 'footer.madeBy' | transloco }}
           <a href="https://github.com/BrunoICosta" target="_blank" rel="noopener"
             >Bruno Vinicius Isaac Costa</a
           >

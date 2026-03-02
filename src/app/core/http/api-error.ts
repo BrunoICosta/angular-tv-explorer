@@ -1,13 +1,24 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-/** Normalized error thrown by the HTTP layer, carrying a user-facing (pt-BR) message. */
+/** Translation keys (root scope) for the user-facing error messages. */
+export type ErrorKey =
+  | 'errors.network'
+  | 'errors.notFound'
+  | 'errors.rateLimit'
+  | 'errors.server'
+  | 'errors.generic';
+
+/**
+ * Normalized error thrown by the HTTP layer. `messageKey` is a translation key, so the UI can
+ * show it in the active language; `message` stays technical for logs.
+ */
 export class ApiError extends Error {
   constructor(
     readonly status: number,
-    message: string,
+    readonly messageKey: string = errorKeyForStatus(status),
     readonly url: string | null = null,
   ) {
-    super(message);
+    super(`HTTP ${status}${url ? ` (${url})` : ''}`);
     this.name = 'ApiError';
   }
 
@@ -16,29 +27,27 @@ export class ApiError extends Error {
   }
 
   static fromHttpError(error: HttpErrorResponse): ApiError {
-    return new ApiError(error.status, messageForStatus(error.status), error.url);
+    return new ApiError(error.status, errorKeyForStatus(error.status), error.url);
   }
 }
 
-export function messageForStatus(status: number): string {
+export function errorKeyForStatus(status: number): ErrorKey {
   if (status === 0) {
-    return 'Não foi possível conectar à API. Verifique sua conexão.';
+    return 'errors.network';
   }
   if (status === 404) {
-    return 'Conteúdo não encontrado.';
+    return 'errors.notFound';
   }
   if (status === 429) {
-    return 'Muitas requisições em pouco tempo. Tente novamente em instantes.';
+    return 'errors.rateLimit';
   }
   if (status >= 500) {
-    return 'O serviço da TVMaze está instável no momento.';
+    return 'errors.server';
   }
-  return 'Algo deu errado ao carregar os dados.';
+  return 'errors.generic';
 }
 
-export function toErrorMessage(error: unknown): string {
-  if (error instanceof ApiError) {
-    return error.message;
-  }
-  return 'Algo deu errado ao carregar os dados.';
+/** Translation key describing any error thrown by a data stream. */
+export function toErrorKey(error: unknown): string {
+  return error instanceof ApiError ? error.messageKey : 'errors.generic';
 }

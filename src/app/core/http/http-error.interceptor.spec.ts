@@ -51,7 +51,7 @@ describe('httpErrorInterceptor', () => {
 
     expect(error).toEqual(jasmine.any(ApiError));
     expect((error as ApiError).status).toBe(500);
-    expect(notifications.error).toHaveBeenCalledOnceWith((error as ApiError).message);
+    expect(notifications.error).toHaveBeenCalledOnceWith('errors.server');
   }));
 
   it('does not retry nor notify on 404', () => {

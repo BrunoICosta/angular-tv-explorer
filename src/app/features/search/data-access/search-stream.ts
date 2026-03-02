@@ -9,7 +9,7 @@ import {
   switchMap,
 } from 'rxjs';
 
-import { toErrorMessage } from '../../../core/http/api-error';
+import { toErrorKey } from '../../../core/http/api-error';
 import { Show } from '../../../core/models/tvmaze.model';
 
 export const MIN_QUERY_LENGTH = 2;
@@ -19,7 +19,7 @@ export type SearchState =
   | { status: 'idle' }
   | { status: 'loading'; query: string }
   | { status: 'success'; query: string; results: Show[] }
-  | { status: 'error'; query: string; message: string };
+  | { status: 'error'; query: string; messageKey: string };
 
 export interface SearchStreamOptions {
   search: (query: string) => Observable<Show[]>;
@@ -61,7 +61,7 @@ function runSearch(
     map((results): SearchState => ({ status: 'success', query, results })),
     startWith<SearchState>({ status: 'loading', query }),
     catchError((error: unknown) =>
-      of<SearchState>({ status: 'error', query, message: toErrorMessage(error) }),
+      of<SearchState>({ status: 'error', query, messageKey: toErrorKey(error) }),
     ),
   );
 }

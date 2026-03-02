@@ -1,12 +1,5 @@
 import { ShowSummary } from '../../core/models/tvmaze.model';
-import {
-  collectGenres,
-  filterByGenre,
-  genreLabel,
-  sortShows,
-  stripHtml,
-  yearOf,
-} from './show-utils';
+import { collectGenres, filterByGenre, sortShows, stripHtml, yearOf } from './show-utils';
 
 function show(
   id: number,
@@ -55,13 +48,8 @@ describe('show-utils', () => {
     expect(filterByGenre(shows, null).length).toBe(4);
   });
 
-  it('collects unique genres sorted by label', () => {
+  it('collects unique genres alphabetically', () => {
     expect(collectGenres(shows)).toEqual(['Comedy', 'Crime', 'Drama']);
-  });
-
-  it('translates genre labels with fallback', () => {
-    expect(genreLabel('Science-Fiction')).toBe('Ficção científica');
-    expect(genreLabel('Unknown')).toBe('Unknown');
   });
 
   it('extracts the year from a date', () => {

@@ -2,61 +2,26 @@ import { ShowSummary } from '../../core/models/tvmaze.model';
 
 export type ShowSort = 'default' | 'rating-desc' | 'rating-asc' | 'name';
 
-export const SORT_OPTIONS: readonly { value: ShowSort; label: string }[] = [
-  { value: 'default', label: 'Ordem do catálogo' },
-  { value: 'rating-desc', label: 'Maior nota' },
-  { value: 'rating-asc', label: 'Menor nota' },
-  { value: 'name', label: 'Nome (A–Z)' },
+/** `labelKey` is a root translation key. */
+export const SORT_OPTIONS: readonly { value: ShowSort; labelKey: string }[] = [
+  { value: 'default', labelKey: 'filters.sort.default' },
+  { value: 'rating-desc', labelKey: 'filters.sort.rating-desc' },
+  { value: 'rating-asc', labelKey: 'filters.sort.rating-asc' },
+  { value: 'name', labelKey: 'filters.sort.name' },
 ];
-
-const GENRE_LABELS: Readonly<Record<string, string>> = {
-  Action: 'Ação',
-  Adult: 'Adulto',
-  Adventure: 'Aventura',
-  Anime: 'Anime',
-  Children: 'Infantil',
-  Comedy: 'Comédia',
-  Crime: 'Crime',
-  DIY: 'Faça você mesmo',
-  Drama: 'Drama',
-  Espionage: 'Espionagem',
-  Family: 'Família',
-  Fantasy: 'Fantasia',
-  Food: 'Culinária',
-  History: 'História',
-  Horror: 'Terror',
-  Legal: 'Jurídico',
-  Medical: 'Medicina',
-  Music: 'Música',
-  Mystery: 'Mistério',
-  Nature: 'Natureza',
-  Romance: 'Romance',
-  'Science-Fiction': 'Ficção científica',
-  Sports: 'Esportes',
-  Supernatural: 'Sobrenatural',
-  Thriller: 'Suspense',
-  Travel: 'Viagem',
-  War: 'Guerra',
-  Western: 'Faroeste',
-};
-
-/** pt-BR label for a TVMaze genre (falls back to the original name). */
-export function genreLabel(genre: string): string {
-  return GENRE_LABELS[genre] ?? genre;
-}
 
 /** Extracts the 4-digit year from an ISO date (`2013-06-24` → `2013`). */
 export function yearOf(date: string | null | undefined): string | null {
   return date && /^\d{4}/.test(date) ? date.slice(0, 4) : null;
 }
 
-/** Unique genres present in a list of shows, sorted by their pt-BR label. */
+/** Unique genres present in a list of shows, alphabetically (labels are translated in the view). */
 export function collectGenres(shows: readonly ShowSummary[]): string[] {
   const genres = new Set<string>();
   for (const show of shows) {
     show.genres.forEach((genre) => genres.add(genre));
   }
-  return [...genres].sort((a, b) => genreLabel(a).localeCompare(genreLabel(b), 'pt-BR'));
+  return [...genres].sort((a, b) => a.localeCompare(b, 'en'));
 }
 
 export function filterByGenre<T extends ShowSummary>(

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { ShowCardComponent } from '../../../../shared/components/show-card/show-card.component';
 import { ShowFiltersComponent } from '../../../../shared/components/show-filters/show-filters.component';
@@ -10,6 +11,7 @@ import { CatalogStore } from '../../data-access/catalog.store';
 @Component({
   selector: 'app-catalog-page',
   imports: [
+    TranslocoPipe,
     ShowCardComponent,
     ShowGridSkeletonComponent,
     StateMessageComponent,

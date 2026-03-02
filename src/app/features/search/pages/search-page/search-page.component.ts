@@ -10,6 +10,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -26,6 +27,7 @@ import {
 @Component({
   selector: 'app-search-page',
   imports: [
+    TranslocoPipe,
     ReactiveFormsModule,
     IconComponent,
     ShowCardComponent,

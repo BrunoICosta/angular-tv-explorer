@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /** Placeholder grid shown while show cards are loading. */
 @Component({
   selector: 'app-show-grid-skeleton',
+  imports: [TranslocoPipe],
   template: `
     <ul class="show-grid" aria-hidden="true">
       @for (item of items(); track item) {
@@ -15,7 +17,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
         </li>
       }
     </ul>
-    <span class="visually-hidden" role="status">Carregando séries…</span>
+    <span class="visually-hidden" role="status">{{ 'common.loadingShows' | transloco }}</span>
   `,
   styles: `
     :host {

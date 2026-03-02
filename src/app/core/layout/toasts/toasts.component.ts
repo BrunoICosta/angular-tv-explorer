@@ -1,20 +1,21 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { NotificationService } from '../../notifications/notification.service';
 import { IconComponent } from '../../../shared/components/icon/icon.component';
 
 @Component({
   selector: 'app-toasts',
-  imports: [IconComponent],
+  imports: [IconComponent, TranslocoPipe],
   template: `
     <div class="toasts" role="status" aria-live="polite">
       @for (toast of notifications.notifications(); track toast.id) {
         <div class="toast" [class.toast--error]="toast.kind === 'error'">
-          <p>{{ toast.message }}</p>
+          <p>{{ toast.messageKey | transloco }}</p>
           <button
             type="button"
             class="toast__close"
-            aria-label="Fechar aviso"
+            [attr.aria-label]="'toasts.close' | transloco"
             (click)="notifications.dismiss(toast.id)"
           >
             <app-icon name="close" [size]="16" />

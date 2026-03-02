@@ -6,7 +6,7 @@ export const SHOW_DETAIL_ROUTES: Routes = [
   {
     path: ':id',
     providers: [SeasonEpisodesService],
-    title: 'Detalhes da série',
+    title: 'titles.showDetail',
     loadComponent: () =>
       import('./pages/show-detail-page/show-detail-page.component').then(
         (m) => m.ShowDetailPageComponent,

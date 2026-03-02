@@ -12,7 +12,7 @@
       variant="error"
       icon="refresh"
       title="Não conseguimos carregar o catálogo"
-      [description]="store.errorMessage()"
+      [description]="store.errorKey() | transloco"
       actionLabel="Tentar novamente"
       (action)="store.retry()"
     />
@@ -23,8 +23,6 @@
       [(sort)]="store.sort"
       [matchCount]="store.filteredShows().length"
       [totalCount]="store.shows().length"
-      label="Filtros do catálogo"
-      countSuffix="séries carregadas"
     />
 
     @if (store.filteredShows().length === 0 && store.status() !== 'loading') {
@@ -56,7 +54,7 @@
       <app-show-grid-skeleton class="more-skeleton" [count]="6" />
     } @else if (store.status() === 'error') {
       <div class="inline-error" role="alert">
-        <p>{{ store.errorMessage() }}</p>
+        <p>{{ store.errorKey() | transloco }}</p>
         <button type="button" class="btn" (click)="store.retry()">Tentar novamente</button>
       </div>
     } @else if (!store.hasMore()) {

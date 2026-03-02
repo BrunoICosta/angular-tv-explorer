@@ -16,7 +16,7 @@
   }
   @case ('error') {
     <div class="episodes-error" role="alert">
-      <p>{{ current.message }}</p>
+      <p>{{ current.messageKey | transloco }}</p>
       <button type="button" class="btn" (click)="retry()">Tentar novamente</button>
     </div>
   }

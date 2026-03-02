@@ -74,12 +74,12 @@ describe('searchStream', () => {
       let calls = 0;
       const search = (): Observable<Show[]> =>
         calls++ === 0
-          ? cold<Show[]>('#', undefined, new ApiError(500, 'Falhou'))
+          ? cold<Show[]>('#', undefined, new ApiError(500, 'errors.custom'))
           : cold('r|', { r: [dark] });
 
       expectObservable(searchStream(terms, { search, retry$, debounceMs: 1 })).toBe('-(le)(ls)-|', {
         l: { status: 'loading', query: 'dark' },
-        e: { status: 'error', query: 'dark', message: 'Falhou' },
+        e: { status: 'error', query: 'dark', messageKey: 'errors.custom' },
         s: { status: 'success', query: 'dark', results: [dark] },
       });
     });

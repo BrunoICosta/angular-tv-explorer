@@ -9,6 +9,7 @@ import { TVMAZE_API_URL } from '../../../../core/api/api.config';
 import { httpErrorInterceptor } from '../../../../core/http/http-error.interceptor';
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
 import { BROWSER_STORAGE, MemoryStorage } from '../../../../core/storage/browser-storage.token';
+import { provideTranslocoTesting } from '../../../../../testing/transloco-testing';
 import { SHOW_DETAIL_ROUTES } from '../../show-detail.routes';
 
 const details = {
@@ -49,6 +50,7 @@ describe('ShowDetailPageComponent', () => {
         provideHttpClientTesting(),
         { provide: TVMAZE_API_URL, useValue: 'https://api.test' },
         { provide: BROWSER_STORAGE, useValue: new MemoryStorage() },
+        provideTranslocoTesting(),
       ],
     });
     http = TestBed.inject(HttpTestingController);

@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "description": "Explore TV shows, search titles, browse seasons, cast and today's schedule with TVMaze data."
+  },
+  "titles": {
+    "catalog": "Catalog",
+    "search": "Search",
+    "showDetail": "Show details",
+    "favorites": "Favorites",
+    "schedule": "Today's schedule",
+    "notFound": "Page not found"
+  },
+  "shell": {
+    "skipLink": "Skip to content",
+    "home": "TV Explorer — home page"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "catalog": "Catalog",
+    "search": "Search",
+    "schedule": "Schedule",
+    "favorites": "Favorites",
+    "savedShows": "saved shows"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "footer": {
+    "dataBy": "Data provided by",
+    "underLicense": "under the",
+    "madeBy": "Made by"
+  },
+  "toasts": {
+    "close": "Dismiss notice"
+  },
+  "errors": {
+    "network": "Could not reach the API. Check your connection.",
+    "notFound": "Content not found.",
+    "rateLimit": "Too many requests in a short time. Please try again shortly.",
+    "server": "The TVMaze service is unstable right now.",
+    "generic": "Something went wrong while loading the data."
+  },
+  "common": {
+    "retry": "Try again",
+    "loadingShows": "Loading shows…",
+    "noRating": "No rating",
+    "rating": "Rated {{value}} out of 10",
+    "poster": "{{name}} poster",
+    "opensInNewTab": "(opens in a new tab)",
+    "backToCatalog": "Back to catalog"
+  },
+  "favorite": {
+    "add": "Add {{name}} to favorites",
+    "remove": "Remove {{name}} from favorites",
+    "active": "In favorites",
+    "inactive": "Add to favorites"
+  },
+  "filters": {
+    "catalogLabel": "Catalog filters",
+    "favoritesLabel": "Favorites filters",
+    "genre": "Genre",
+    "allGenres": "All genres",
+    "sortBy": "Sort by",
+    "countLoaded": "of {{total}} loaded shows",
+    "countFavorites": "of {{total}} favorites",
+    "sort": {
+      "default": "Catalog order",
+      "recent": "Recently added",
+      "rating-desc": "Highest rated",
+      "rating-asc": "Lowest rated",
+      "name": "Name (A–Z)"
+    }
+  },
+  "notFound": {
+    "eyebrow": "Error 404",
+    "title": "This page went off the air",
+    "description": "The address you tried to open does not exist or was removed."
+  },
+  "genres": {
+    "Action": "Action",
+    "Adult": "Adult",
+    "Adventure": "Adventure",
+    "Anime": "Anime",
+    "Children": "Kids",
+    "Comedy": "Comedy",
+    "Crime": "Crime",
+    "DIY": "DIY",
+    "Drama": "Drama",
+    "Espionage": "Espionage",
+    "Family": "Family",
+    "Fantasy": "Fantasy",
+    "Food": "Food",
+    "History": "History",
+    "Horror": "Horror",
+    "Legal": "Legal",
+    "Medical": "Medical",
+    "Music": "Music",
+    "Mystery": "Mystery",
+    "Nature": "Nature",
+    "Romance": "Romance",
+    "Science-Fiction": "Science fiction",
+    "Sports": "Sports",
+    "Supernatural": "Supernatural",
+    "Thriller": "Thriller",
+    "Travel": "Travel",
+    "War": "War",
+    "Western": "Western"
+  }
+}

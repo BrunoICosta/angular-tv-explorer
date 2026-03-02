@@ -38,7 +38,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
       }
       const apiError = ApiError.fromHttpError(error);
       if (!apiError.isNotFound) {
-        notifications.error(apiError.message);
+        notifications.error(apiError.messageKey);
       }
       return throwError(() => apiError);
     }),

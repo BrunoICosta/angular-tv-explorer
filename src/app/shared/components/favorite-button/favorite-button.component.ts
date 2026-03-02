@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { FavoritesStore } from '../../../core/favorites/favorites.store';
 import { ShowSummary } from '../../../core/models/tvmaze.model';
@@ -6,21 +7,22 @@ import { IconComponent } from '../icon/icon.component';
 
 @Component({
   selector: 'app-favorite-button',
-  imports: [IconComponent],
+  imports: [IconComponent, TranslocoPipe],
   template: `
+    @let label = labelKey() | transloco: { name: show().name };
     <button
       type="button"
       class="fav"
       [class.fav--active]="active()"
       [class.fav--compact]="compact()"
       [attr.aria-pressed]="active()"
-      [attr.aria-label]="compact() ? label() : null"
-      [attr.title]="compact() ? label() : null"
+      [attr.aria-label]="compact() ? label : null"
+      [attr.title]="compact() ? label : null"
       (click)="toggle($event)"
     >
       <app-icon name="heart" [size]="compact() ? 18 : 20" [filled]="active()" />
       @if (!compact()) {
-        <span>{{ active() ? 'Nos favoritos' : 'Favoritar' }}</span>
+        <span>{{ (active() ? 'favorite.active' : 'favorite.inactive') | transloco }}</span>
       }
     </button>
   `,
@@ -35,10 +37,8 @@ export class FavoriteButtonComponent {
   readonly compact = input(false);
 
   protected readonly active = computed(() => this.store.ids().has(this.show().id));
-  protected readonly label = computed(() =>
-    this.active()
-      ? `Remover ${this.show().name} dos favoritos`
-      : `Adicionar ${this.show().name} aos favoritos`,
+  protected readonly labelKey = computed(() =>
+    this.active() ? 'favorite.remove' : 'favorite.add',
   );
 
   protected toggle(event: Event): void {

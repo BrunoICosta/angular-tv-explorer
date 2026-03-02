@@ -3,8 +3,9 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Subject, catchError, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { TranslocoPipe } from '@jsverse/transloco';
 
-import { toErrorMessage } from '../../../../core/http/api-error';
+import { toErrorKey } from '../../../../core/http/api-error';
 import { CLOCK } from '../../../../core/time/clock.token';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
 import { ScheduleSlotComponent } from '../../components/schedule-slot/schedule-slot.component';
@@ -21,11 +22,11 @@ import {
 type ScheduleState =
   | { status: 'loading' }
   | { status: 'loaded'; slots: ScheduleSlot[]; total: number }
-  | { status: 'error'; message: string };
+  | { status: 'error'; messageKey: string };
 
 @Component({
   selector: 'app-schedule-page',
-  imports: [DatePipe, StateMessageComponent, ScheduleSlotComponent],
+  imports: [TranslocoPipe, DatePipe, StateMessageComponent, ScheduleSlotComponent],
   templateUrl: './schedule-page.component.html',
   styleUrl: './schedule-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -72,7 +73,7 @@ export class SchedulePageComponent {
               ),
               startWith<ScheduleState>({ status: 'loading' }),
               catchError((error: unknown) =>
-                of<ScheduleState>({ status: 'error', message: toErrorMessage(error) }),
+                of<ScheduleState>({ status: 'error', messageKey: toErrorKey(error) }),
               ),
             ),
           ),

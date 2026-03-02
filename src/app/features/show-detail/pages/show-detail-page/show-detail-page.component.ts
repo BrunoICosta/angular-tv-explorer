@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { Meta, Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { Subject, catchError, map, of, startWith, switchMap } from 'rxjs';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { TvmazeApiService } from '../../../../core/api/tvmaze-api.service';
-import { ApiError, toErrorMessage } from '../../../../core/http/api-error';
+import { ApiError, toErrorKey } from '../../../../core/http/api-error';
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
-import { DEFAULT_DESCRIPTION, formatTitle } from '../../../../core/title/app-title.strategy';
+import { PageMetaService } from '../../../../core/i18n/page-meta.service';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button.component';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
@@ -24,11 +24,12 @@ type DetailState =
   | { status: 'loading' }
   | { status: 'loaded'; show: ShowDetails }
   | { status: 'not-found' }
-  | { status: 'error'; message: string };
+  | { status: 'error'; messageKey: string };
 
 @Component({
   selector: 'app-show-detail-page',
   imports: [
+    TranslocoPipe,
     RouterLink,
     IconComponent,
     StateMessageComponent,
@@ -43,8 +44,7 @@ type DetailState =
 })
 export class ShowDetailPageComponent {
   private readonly api = inject(TvmazeApiService);
-  private readonly title = inject(Title);
-  private readonly meta = inject(Meta);
+  private readonly pageMeta = inject(PageMetaService);
   private readonly reload = new Subject<void>();
 
   /** Bound from the `:id` route param through `withComponentInputBinding()`. */
@@ -67,12 +67,9 @@ export class ShowDetailPageComponent {
     effect(() => {
       const state = this.state();
       if (state.status === 'loaded') {
-        this.title.setTitle(formatTitle(state.show.name));
+        this.pageMeta.setTitle(state.show.name);
         const summary = stripHtml(state.show.summary);
-        this.meta.updateTag({
-          name: 'description',
-          content: summary ? truncate(summary, 160) : DEFAULT_DESCRIPTION,
-        });
+        this.pageMeta.setDescription(summary ? truncate(summary, 160) : null);
       }
     });
   }
@@ -92,7 +89,7 @@ export class ShowDetailPageComponent {
         of<DetailState>(
           error instanceof ApiError && error.isNotFound
             ? { status: 'not-found' }
-            : { status: 'error', message: toErrorMessage(error) },
+            : { status: 'error', messageKey: toErrorKey(error) },
         ),
       ),
     );

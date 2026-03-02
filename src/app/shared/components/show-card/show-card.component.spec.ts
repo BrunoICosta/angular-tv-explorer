@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { BROWSER_STORAGE, MemoryStorage } from '../../../core/storage/browser-storage.token';
 import { FavoritesStore } from '../../../core/favorites/favorites.store';
 import { ShowSummary } from '../../../core/models/tvmaze.model';
+import { provideTranslocoTesting } from '../../../../testing/transloco-testing';
 import { ShowCardComponent } from './show-card.component';
 
 const show: ShowSummary = {
@@ -27,7 +28,11 @@ describe('ShowCardComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ShowCardComponent],
-      providers: [provideRouter([]), { provide: BROWSER_STORAGE, useValue: new MemoryStorage() }],
+      providers: [
+        provideRouter([]),
+        provideTranslocoTesting(),
+        { provide: BROWSER_STORAGE, useValue: new MemoryStorage() },
+      ],
     });
     fixture = TestBed.createComponent(ShowCardComponent);
     element = fixture.nativeElement;

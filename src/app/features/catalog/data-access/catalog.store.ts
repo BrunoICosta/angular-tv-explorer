@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { EMPTY, Subject, catchError, exhaustMap, tap } from 'rxjs';
 
 import { TvmazeApiService } from '../../../core/api/tvmaze-api.service';
-import { ApiError, toErrorMessage } from '../../../core/http/api-error';
+import { ApiError, toErrorKey } from '../../../core/http/api-error';
 import { Show } from '../../../core/models/tvmaze.model';
 import {
   ShowSort,
@@ -29,11 +29,12 @@ export class CatalogStore {
 
   private readonly _shows = signal<readonly Show[]>([]);
   private readonly _status = signal<CatalogStatus>('idle');
-  private readonly _errorMessage = signal('');
+  private readonly _errorKey = signal('');
 
   readonly shows = this._shows.asReadonly();
   readonly status = this._status.asReadonly();
-  readonly errorMessage = this._errorMessage.asReadonly();
+  /** Translation key of the last error. */
+  readonly errorKey = this._errorKey.asReadonly();
   readonly genre = signal<string | null>(null);
   readonly sort = signal<ShowSort>('default');
 
@@ -73,7 +74,7 @@ export class CatalogStore {
               if (error instanceof ApiError && error.isNotFound) {
                 this._status.set('complete');
               } else {
-                this._errorMessage.set(toErrorMessage(error));
+                this._errorKey.set(toErrorKey(error));
                 this._status.set('error');
               }
               return EMPTY;
