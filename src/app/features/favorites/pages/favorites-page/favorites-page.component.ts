@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { FavoritesStore } from '../../../../core/favorites/favorites.store';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -14,7 +15,7 @@ import {
 
 @Component({
   selector: 'app-favorites-page',
-  imports: [RouterLink, IconComponent, ShowCardComponent, ShowFiltersComponent],
+  imports: [RouterLink, TranslocoPipe, IconComponent, ShowCardComponent, ShowFiltersComponent],
   templateUrl: './favorites-page.component.html',
   styleUrl: './favorites-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

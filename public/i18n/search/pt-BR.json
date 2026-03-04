@@ -1,0 +1,14 @@
+{
+  "eyebrow": "Busca",
+  "title": "Encontre qualquer série",
+  "intro": "Digite o nome de uma série. A busca é feita enquanto você digita.",
+  "inputLabel": "Nome da série",
+  "placeholder": "Ex.: Breaking Bad, Dark, The Office…",
+  "clear": "Limpar busca",
+  "failed": "A busca falhou",
+  "results": "{{count}} resultado(s) para",
+  "nothingTitle": "Nada encontrado",
+  "nothingDescription": "Nenhuma série corresponde a “{{query}}”. Tente outro termo.",
+  "hint": "Digite pelo menos {{min}} caracteres ou experimente uma sugestão:",
+  "resultsLabel": "Resultados da busca"
+}

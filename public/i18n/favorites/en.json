@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Your list",
+  "title": "Favorites",
+  "intro": "Shows saved in this browser. They stay here even after you close the tab.",
+  "confirmQuestion": "Remove all of them?",
+  "confirmYes": "Yes, clear",
+  "cancel": "Cancel",
+  "clear": "Clear favorites",
+  "listLabel": "Favorite shows",
+  "noMatch": "No favorites with this genre.",
+  "emptyTitle": "No saved shows yet",
+  "emptyDescription": "Tap the heart on any show to keep it here.",
+  "explore": "Explore the catalog",
+  "search": "Search for a show"
+}

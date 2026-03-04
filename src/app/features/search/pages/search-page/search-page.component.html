@@ -1,12 +1,12 @@
 <section class="container page">
   <header class="page-header">
-    <p class="eyebrow">Busca</p>
-    <h1>Encontre qualquer série</h1>
-    <p>Digite o nome de uma série. A busca é feita enquanto você digita.</p>
+    <p class="eyebrow">{{ 'search.eyebrow' | transloco }}</p>
+    <h1>{{ 'search.title' | transloco }}</h1>
+    <p>{{ 'search.intro' | transloco }}</p>
   </header>
 
   <form class="search" role="search" (submit)="$event.preventDefault()">
-    <label class="visually-hidden" for="search-input">Nome da série</label>
+    <label class="visually-hidden" for="search-input">{{ 'search.inputLabel' | transloco }}</label>
     <app-icon class="search__icon" name="search" />
     <input
       #searchInput
@@ -15,11 +15,16 @@
       type="search"
       autocomplete="off"
       spellcheck="false"
-      placeholder="Ex.: Breaking Bad, Dark, The Office…"
+      [placeholder]="'search.placeholder' | transloco"
       [formControl]="query"
     />
     @if (query.value) {
-      <button type="button" class="search__clear" aria-label="Limpar busca" (click)="clear()">
+      <button
+        type="button"
+        class="search__clear"
+        [attr.aria-label]="'search.clear' | transloco"
+        (click)="clear()"
+      >
         <app-icon name="close" [size]="18" />
       </button>
     }
@@ -35,18 +40,19 @@
         <app-state-message
           variant="error"
           icon="refresh"
-          title="A busca falhou"
+          [title]="'search.failed' | transloco"
           [description]="current.messageKey | transloco"
-          actionLabel="Tentar novamente"
+          [actionLabel]="'common.retry' | transloco"
           (action)="retry()"
         />
       }
       @case ('success') {
         @if (current.results.length) {
           <p class="results__summary" role="status">
-            {{ current.results.length }} resultado(s) para <strong>“{{ current.query }}”</strong>
+            {{ 'search.results' | transloco: { count: current.results.length } }}
+            <strong>“{{ current.query }}”</strong>
           </p>
-          <ul class="show-grid">
+          <ul class="show-grid" [attr.aria-label]="'search.resultsLabel' | transloco">
             @for (show of current.results; track show.id) {
               <li><app-show-card [show]="show" /></li>
             }
@@ -54,16 +60,14 @@
         } @else {
           <app-state-message
             icon="search"
-            title="Nada encontrado"
-            [description]="
-              'Nenhuma série corresponde a “' + current.query + '”. Tente outro termo.'
-            "
+            [title]="'search.nothingTitle' | transloco"
+            [description]="'search.nothingDescription' | transloco: { query: current.query }"
           />
         }
       }
       @default {
         <div class="suggestions">
-          <p>Digite pelo menos {{ minLength }} caracteres ou experimente uma sugestão:</p>
+          <p>{{ 'search.hint' | transloco: { min: minLength } }}</p>
           <ul>
             @for (term of suggestions; track term) {
               <li>

@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Sua lista",
+  "title": "Favoritos",
+  "intro": "Séries salvas neste navegador. Elas ficam guardadas mesmo depois de fechar a aba.",
+  "confirmQuestion": "Remover todas?",
+  "confirmYes": "Sim, limpar",
+  "cancel": "Cancelar",
+  "clear": "Limpar favoritos",
+  "listLabel": "Séries favoritas",
+  "noMatch": "Nenhum favorito com esse gênero.",
+  "emptyTitle": "Nenhuma série salva ainda",
+  "emptyDescription": "Toque no coração de qualquer série para guardá-la aqui.",
+  "explore": "Explorar catálogo",
+  "search": "Buscar uma série"
+}

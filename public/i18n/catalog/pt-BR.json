@@ -1,0 +1,12 @@
+{
+  "eyebrow": "Catálogo",
+  "titleStart": "Descubra sua próxima",
+  "titleHighlight": "série favorita",
+  "intro": "Milhares de títulos do catálogo da TVMaze, carregados conforme você rola a página.",
+  "loadError": "Não conseguimos carregar o catálogo",
+  "noMatchTitle": "Nenhuma série com esse gênero por aqui",
+  "noMatchDescription": "Role para carregar mais páginas do catálogo ou escolha outro gênero.",
+  "clearFilter": "Limpar filtro",
+  "listLabel": "Séries do catálogo",
+  "end": "Você chegou ao fim do catálogo."
+}

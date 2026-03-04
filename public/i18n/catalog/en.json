@@ -1,0 +1,12 @@
+{
+  "eyebrow": "Catalog",
+  "titleStart": "Discover your next",
+  "titleHighlight": "favorite show",
+  "intro": "Thousands of titles from the TVMaze catalog, loaded as you scroll.",
+  "loadError": "We couldn't load the catalog",
+  "noMatchTitle": "No shows with this genre yet",
+  "noMatchDescription": "Scroll to load more catalog pages or pick another genre.",
+  "clearFilter": "Clear filter",
+  "listLabel": "Catalog shows",
+  "end": "You've reached the end of the catalog."
+}

@@ -1,8 +1,11 @@
 <section class="container page">
   <header class="hero">
-    <p class="eyebrow">Catálogo</p>
-    <h1>Descubra sua próxima <span>série favorita</span></h1>
-    <p>Milhares de títulos do catálogo da TVMaze, carregados conforme você rola a página.</p>
+    <p class="eyebrow">{{ 'catalog.eyebrow' | transloco }}</p>
+    <h1>
+      {{ 'catalog.titleStart' | transloco }}
+      <span>{{ 'catalog.titleHighlight' | transloco }}</span>
+    </h1>
+    <p>{{ 'catalog.intro' | transloco }}</p>
   </header>
 
   @if (store.isInitialLoad()) {
@@ -11,9 +14,9 @@
     <app-state-message
       variant="error"
       icon="refresh"
-      title="Não conseguimos carregar o catálogo"
+      [title]="'catalog.loadError' | transloco"
       [description]="store.errorKey() | transloco"
-      actionLabel="Tentar novamente"
+      [actionLabel]="'common.retry' | transloco"
       (action)="store.retry()"
     />
   } @else {
@@ -28,14 +31,14 @@
     @if (store.filteredShows().length === 0 && store.status() !== 'loading') {
       <app-state-message
         icon="search"
-        title="Nenhuma série com esse gênero por aqui"
-        description="Role para carregar mais páginas do catálogo ou escolha outro gênero."
-        actionLabel="Limpar filtro"
+        [title]="'catalog.noMatchTitle' | transloco"
+        [description]="'catalog.noMatchDescription' | transloco"
+        [actionLabel]="'catalog.clearFilter' | transloco"
         (action)="store.genre.set(null)"
       />
     }
 
-    <ul class="show-grid" aria-label="Séries do catálogo">
+    <ul class="show-grid" [attr.aria-label]="'catalog.listLabel' | transloco">
       @for (show of store.visibleShows(); track show.id; let i = $index) {
         <li>
           <app-show-card [show]="show" [priority]="i < 6" />
@@ -55,10 +58,12 @@
     } @else if (store.status() === 'error') {
       <div class="inline-error" role="alert">
         <p>{{ store.errorKey() | transloco }}</p>
-        <button type="button" class="btn" (click)="store.retry()">Tentar novamente</button>
+        <button type="button" class="btn" (click)="store.retry()">
+          {{ 'common.retry' | transloco }}
+        </button>
       </div>
     } @else if (!store.hasMore()) {
-      <p class="end-of-list">Você chegou ao fim do catálogo.</p>
+      <p class="end-of-list">{{ 'catalog.end' | transloco }}</p>
     }
   }
 </section>

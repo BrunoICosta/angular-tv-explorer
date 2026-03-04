@@ -1,0 +1,14 @@
+{
+  "eyebrow": "Search",
+  "title": "Find any show",
+  "intro": "Type a show name. Results update as you type.",
+  "inputLabel": "Show name",
+  "placeholder": "e.g. Breaking Bad, Dark, The Office…",
+  "clear": "Clear search",
+  "failed": "Search failed",
+  "results": "{{count}} result(s) for",
+  "nothingTitle": "Nothing found",
+  "nothingDescription": "No show matches “{{query}}”. Try another term.",
+  "hint": "Type at least {{min}} characters or try a suggestion:",
+  "resultsLabel": "Search results"
+}
