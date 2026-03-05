@@ -1,7 +1,7 @@
 <div class="container page">
   <a class="back-link" routerLink="/">
     <app-icon name="arrowLeft" [size]="18" />
-    Voltar ao catálogo
+    {{ 'common.backToCatalog' | transloco }}
   </a>
 
   @let current = state();
@@ -16,22 +16,22 @@
           <div class="skeleton skeleton-line skeleton-line--short"></div>
         </div>
       </div>
-      <span class="visually-hidden" role="status">Carregando detalhes da série…</span>
+      <span class="visually-hidden" role="status">{{ 'showDetail.loading' | transloco }}</span>
     }
     @case ('not-found') {
       <app-state-message
         icon="tv"
-        title="Série não encontrada"
-        description="Talvez o endereço esteja incorreto ou a série tenha sido removida da TVMaze."
+        [title]="'showDetail.notFoundTitle' | transloco"
+        [description]="'showDetail.notFoundDescription' | transloco"
       />
     }
     @case ('error') {
       <app-state-message
         variant="error"
         icon="refresh"
-        title="Não foi possível carregar a série"
+        [title]="'showDetail.loadError' | transloco"
         [description]="current.messageKey | transloco"
-        actionLabel="Tentar novamente"
+        [actionLabel]="'common.retry' | transloco"
         (action)="retry()"
       />
     }

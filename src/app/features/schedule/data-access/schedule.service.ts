@@ -10,23 +10,24 @@ export interface ScheduleSlot {
   episodes: ScheduleEpisode[];
 }
 
-export const SCHEDULE_COUNTRIES: readonly { code: string; name: string }[] = [
-  { code: 'US', name: 'Estados Unidos' },
-  { code: 'BR', name: 'Brasil' },
-  { code: 'GB', name: 'Reino Unido' },
-  { code: 'CA', name: 'Canadá' },
-  { code: 'PT', name: 'Portugal' },
-  { code: 'DE', name: 'Alemanha' },
-  { code: 'FR', name: 'França' },
-  { code: 'JP', name: 'Japão' },
-  { code: 'KR', name: 'Coreia do Sul' },
-  { code: 'AU', name: 'Austrália' },
+/** ISO 3166-1 codes offered in the schedule (names are localized in the view). */
+export const SCHEDULE_COUNTRIES: readonly string[] = [
+  'US',
+  'BR',
+  'GB',
+  'CA',
+  'PT',
+  'DE',
+  'FR',
+  'JP',
+  'KR',
+  'AU',
 ];
 
 export const DEFAULT_COUNTRY = 'US';
 
 export function isSupportedCountry(code: string | null | undefined): code is string {
-  return !!code && SCHEDULE_COUNTRIES.some((country) => country.code === code);
+  return !!code && SCHEDULE_COUNTRIES.includes(code);
 }
 
 /** Groups episodes by airtime, ordered chronologically, keeping the API order inside a slot. */

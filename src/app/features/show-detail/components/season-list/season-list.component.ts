@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, linkedSignal } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { Season } from '../../../../core/models/tvmaze.model';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
@@ -8,7 +9,7 @@ import { EpisodeListComponent } from '../episode-list/episode-list.component';
 /** Accordion of seasons; episodes are only fetched when a season is expanded. */
 @Component({
   selector: 'app-season-list',
-  imports: [DatePipe, IconComponent, EpisodeListComponent],
+  imports: [DatePipe, TranslocoPipe, IconComponent, EpisodeListComponent],
   templateUrl: './season-list.component.html',
   styleUrl: './season-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

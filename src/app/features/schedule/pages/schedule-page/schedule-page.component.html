@@ -1,19 +1,20 @@
 <section class="container page">
   <header class="page-header">
-    <p class="eyebrow">Agenda</p>
-    <h1>{{ isToday() ? 'Agenda de hoje' : 'Agenda do dia' }}</h1>
+    <p class="eyebrow">{{ 'schedule.eyebrow' | transloco }}</p>
+    <h1>{{ (isToday() ? 'schedule.titleToday' : 'schedule.titleDay') | transloco }}</h1>
     <p>
-      O que vai ao ar em <strong>{{ countryName() }}</strong> em
-      <time [attr.datetime]="date()">{{ date() | date: 'fullDate' }}</time
-      >, horário local da emissora.
+      {{ 'schedule.introStart' | transloco }} <strong>{{ countryName() }}</strong>
+      {{ 'schedule.introOn' | transloco }}
+      <time [attr.datetime]="date()">{{ date() | date: 'fullDate' : undefined : locale() }}</time
+      >{{ 'schedule.introEnd' | transloco }}
     </p>
   </header>
 
-  <div class="controls" role="group" aria-label="Filtros da agenda">
+  <div class="controls" role="group" [attr.aria-label]="'schedule.filtersLabel' | transloco">
     <div class="field">
-      <label for="schedule-country">País</label>
+      <label for="schedule-country">{{ 'schedule.country' | transloco }}</label>
       <select id="schedule-country" class="select" (change)="onCountryChange($event)">
-        @for (option of countries; track option.code) {
+        @for (option of countries(); track option.code) {
           <option [value]="option.code" [selected]="option.code === country()">
             {{ option.name }}
           </option>
@@ -22,7 +23,7 @@
     </div>
 
     <div class="field">
-      <label for="schedule-date">Data</label>
+      <label for="schedule-date">{{ 'schedule.date' | transloco }}</label>
       <input
         id="schedule-date"
         class="input"
@@ -34,11 +35,13 @@
 
     <div class="controls__days">
       <button type="button" class="btn" (click)="shiftDay(-1)">
-        <span aria-hidden="true">←</span> Dia anterior
+        <span aria-hidden="true">←</span> {{ 'schedule.previous' | transloco }}
       </button>
-      <button type="button" class="btn" [disabled]="isToday()" (click)="goToToday()">Hoje</button>
+      <button type="button" class="btn" [disabled]="isToday()" (click)="goToToday()">
+        {{ 'schedule.today' | transloco }}
+      </button>
       <button type="button" class="btn" (click)="shiftDay(1)">
-        Próximo dia <span aria-hidden="true">→</span>
+        {{ 'schedule.next' | transloco }} <span aria-hidden="true">→</span>
       </button>
     </div>
   </div>
@@ -51,22 +54,24 @@
           <div class="skeleton timeline-skeleton__row"></div>
         }
       </div>
-      <span class="visually-hidden" role="status">Carregando agenda…</span>
+      <span class="visually-hidden" role="status">{{ 'schedule.loading' | transloco }}</span>
     }
     @case ('error') {
       <app-state-message
         variant="error"
         icon="refresh"
-        title="Não foi possível carregar a agenda"
+        [title]="'schedule.loadError' | transloco"
         [description]="current.messageKey | transloco"
-        actionLabel="Tentar novamente"
+        [actionLabel]="'common.retry' | transloco"
         (action)="retry()"
       />
     }
     @case ('loaded') {
       @if (current.total) {
         <p class="summary" role="status">
-          {{ current.total }} episódio(s) em {{ current.slots.length }} horário(s)
+          {{
+            'schedule.summary' | transloco: { episodes: current.total, slots: current.slots.length }
+          }}
         </p>
         <ol class="timeline">
           @for (slot of current.slots; track slot.time) {
@@ -78,8 +83,8 @@
       } @else {
         <app-state-message
           icon="calendar"
-          title="Nada na grade para este dia"
-          description="A TVMaze não tem episódios cadastrados para esse país e data. Experimente outro país ou dia."
+          [title]="'schedule.emptyTitle' | transloco"
+          [description]="'schedule.emptyDescription' | transloco"
         />
       }
     }

@@ -1,38 +1,45 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
+import { LanguageService } from '../../../../core/i18n/language.service';
 import { ShowDetails } from '../../../../core/models/tvmaze.model';
 import { IconComponent } from '../../../../shared/components/icon/icon.component';
 import { RatingComponent } from '../../../../shared/components/rating/rating.component';
+import { ApiLabelPipe } from '../../../../shared/pipes/api-label.pipe';
 import { GenreLabelPipe } from '../../../../shared/pipes/genre-label.pipe';
 import { SanitizeHtmlPipe } from '../../../../shared/pipes/sanitize-html.pipe';
 import { yearOf } from '../../../../shared/utils/show-utils';
 
-const STATUS_LABELS: Readonly<Record<string, string>> = {
-  Running: 'Em exibição',
-  Ended: 'Finalizada',
-  'To Be Determined': 'A definir',
-  'In Development': 'Em desenvolvimento',
-};
+/** TVMaze weekday names → index used to build localized short names (2024-01-01 is a Monday). */
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-const DAY_LABELS: Readonly<Record<string, string>> = {
-  Monday: 'seg',
-  Tuesday: 'ter',
-  Wednesday: 'qua',
-  Thursday: 'qui',
-  Friday: 'sex',
-  Saturday: 'sáb',
-  Sunday: 'dom',
-};
+function weekdayLabel(day: string, locale: string): string {
+  const index = WEEKDAYS.indexOf(day);
+  if (index < 0) {
+    return day;
+  }
+  return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2024, 0, 1 + index));
+}
 
 @Component({
   selector: 'app-show-hero',
-  imports: [NgOptimizedImage, IconComponent, RatingComponent, GenreLabelPipe, SanitizeHtmlPipe],
+  imports: [
+    NgOptimizedImage,
+    TranslocoPipe,
+    IconComponent,
+    RatingComponent,
+    ApiLabelPipe,
+    GenreLabelPipe,
+    SanitizeHtmlPipe,
+  ],
   templateUrl: './show-hero.component.html',
   styleUrl: './show-hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShowHeroComponent {
+  private readonly locale = inject(LanguageService).locale;
+
   readonly show = input.required<ShowDetails>();
 
   protected readonly years = computed(() => {
@@ -45,10 +52,6 @@ export class ShowHeroComponent {
     return end && end !== start ? `${start}–${end}` : start;
   });
 
-  protected readonly statusLabel = computed(
-    () => STATUS_LABELS[this.show().status] ?? this.show().status,
-  );
-
   protected readonly channel = computed(
     () => this.show().network?.name ?? this.show().webChannel?.name ?? null,
   );
@@ -58,7 +61,8 @@ export class ShowHeroComponent {
     if (!days.length) {
       return null;
     }
-    const dayList = days.map((day) => DAY_LABELS[day] ?? day).join(', ');
+    const locale = this.locale();
+    const dayList = days.map((day) => weekdayLabel(day, locale)).join(', ');
     return time ? `${dayList} · ${time}` : dayList;
   });
 

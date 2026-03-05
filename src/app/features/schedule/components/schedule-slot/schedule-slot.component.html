@@ -1,9 +1,9 @@
 <article class="slot">
   <h2 class="slot__time">
-    <span class="visually-hidden">Horário</span>
-    {{ slot().time || 'Sem horário' }}
+    <span class="visually-hidden">{{ 'schedule.airtime' | transloco }}</span>
+    {{ slot().time || ('schedule.noTime' | transloco) }}
     @if (past()) {
-      <span class="slot__badge">Já exibido</span>
+      <span class="slot__badge">{{ 'schedule.aired' | transloco }}</span>
     }
   </h2>
 
@@ -18,7 +18,13 @@
           }
           <span class="item__text">
             <span class="item__show">{{ episode.show.name }}</span>
-            <span class="item__episode"> {{ episodeCode(episode) }} · {{ episode.name }} </span>
+            <span class="item__episode">
+              {{
+                episodeCodeKey(episode)
+                  | transloco: { season: episode.season, number: episode.number }
+              }}
+              · {{ episode.name }}
+            </span>
             <span class="item__meta">
               @if (channel(episode); as name) {
                 <span>{{ name }}</span>

@@ -1,5 +1,5 @@
 <section class="seasons" aria-labelledby="seasons-title">
-  <h2 id="seasons-title" class="section-title">Temporadas e episódios</h2>
+  <h2 id="seasons-title" class="section-title">{{ 'showDetail.seasonsTitle' | transloco }}</h2>
 
   @if (orderedSeasons().length) {
     <ul class="seasons__list">
@@ -14,10 +14,12 @@
               [attr.aria-controls]="'season-panel-' + season.id"
               (click)="toggle(season.id)"
             >
-              <span class="season__number">Temporada {{ season.number }}</span>
+              <span class="season__number">{{
+                'showDetail.season' | transloco: { number: season.number }
+              }}</span>
               <span class="season__meta">
                 @if (season.episodeOrder) {
-                  {{ season.episodeOrder }} episódios
+                  {{ 'showDetail.episodeCount' | transloco: { count: season.episodeOrder } }}
                 }
                 @if (season.premiereDate) {
                   · {{ season.premiereDate | date: 'yyyy' }}
@@ -35,6 +37,6 @@
       }
     </ul>
   } @else {
-    <p class="seasons__empty">A TVMaze ainda não tem temporadas cadastradas para esta série.</p>
+    <p class="seasons__empty">{{ 'showDetail.noSeasons' | transloco }}</p>
   }
 </section>

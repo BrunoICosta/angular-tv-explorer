@@ -1,5 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { CastMember } from '../../../../core/models/tvmaze.model';
 
@@ -7,7 +8,7 @@ const INITIAL_VISIBLE = 12;
 
 @Component({
   selector: 'app-cast-list',
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, TranslocoPipe],
   templateUrl: './cast-list.component.html',
   styleUrl: './cast-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 import { ScheduleEpisode } from '../../../../core/models/tvmaze.model';
 import { FavoriteButtonComponent } from '../../../../shared/components/favorite-button/favorite-button.component';
@@ -8,7 +9,7 @@ import { ScheduleSlot } from '../../data-access/schedule.service';
 
 @Component({
   selector: 'app-schedule-slot',
-  imports: [NgOptimizedImage, RouterLink, FavoriteButtonComponent],
+  imports: [NgOptimizedImage, RouterLink, TranslocoPipe, FavoriteButtonComponent],
   templateUrl: './schedule-slot.component.html',
   styleUrl: './schedule-slot.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,9 +21,9 @@ export class ScheduleSlotComponent {
   readonly slot = input.required<ScheduleSlot>();
   readonly past = input(false);
 
-  protected episodeCode(episode: ScheduleEpisode): string {
-    const season = `T${episode.season}`;
-    return episode.number === null ? `${season} · Especial` : `${season}E${episode.number}`;
+  /** `T1E5` / `S1E5`, or the "special" variant when the episode has no number. */
+  protected episodeCodeKey(episode: ScheduleEpisode): string {
+    return episode.number === null ? 'schedule.specialCode' : 'schedule.episodeCode';
   }
 
   protected channel(episode: ScheduleEpisode): string | null {

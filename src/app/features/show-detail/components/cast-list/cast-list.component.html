@@ -1,5 +1,5 @@
 <section aria-labelledby="cast-title">
-  <h2 id="cast-title" class="section-title">Elenco</h2>
+  <h2 id="cast-title" class="section-title">{{ 'showDetail.castTitle' | transloco }}</h2>
 
   @if (cast().length) {
     <ul class="cast">
@@ -15,7 +15,11 @@
           <div class="cast__text">
             <p class="cast__name">{{ member.person.name }}</p>
             <p class="cast__character">
-              {{ member.voice ? 'Voz de ' : '' }}{{ member.character.name }}
+              {{
+                member.voice
+                  ? ('showDetail.voiceOf' | transloco: { name: member.character.name })
+                  : member.character.name
+              }}
             </p>
           </div>
         </li>
@@ -24,10 +28,10 @@
 
     @if (hiddenCount() > 0) {
       <button type="button" class="btn cast__more" (click)="expand()">
-        Ver elenco completo (+{{ hiddenCount() }})
+        {{ 'showDetail.fullCast' | transloco: { count: hiddenCount() } }}
       </button>
     }
   } @else {
-    <p class="cast__empty">Elenco não informado.</p>
+    <p class="cast__empty">{{ 'showDetail.noCast' | transloco }}</p>
   }
 </section>

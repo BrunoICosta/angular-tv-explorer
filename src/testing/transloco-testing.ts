@@ -3,6 +3,16 @@ import { Translation, TranslocoTestingModule } from '@jsverse/transloco';
 
 import en from '../../public/i18n/en.json';
 import ptBR from '../../public/i18n/pt-BR.json';
+import catalogEn from '../../public/i18n/catalog/en.json';
+import catalogPt from '../../public/i18n/catalog/pt-BR.json';
+import favoritesEn from '../../public/i18n/favorites/en.json';
+import favoritesPt from '../../public/i18n/favorites/pt-BR.json';
+import scheduleEn from '../../public/i18n/schedule/en.json';
+import schedulePt from '../../public/i18n/schedule/pt-BR.json';
+import searchEn from '../../public/i18n/search/en.json';
+import searchPt from '../../public/i18n/search/pt-BR.json';
+import detailEn from '../../public/i18n/show-detail/en.json';
+import detailPt from '../../public/i18n/show-detail/pt-BR.json';
 import {
   AVAILABLE_LANGS,
   AppLang,
@@ -12,7 +22,13 @@ import {
 import { registerAppLocales } from '../app/core/i18n/provide-i18n';
 
 /** Feature scopes, registered as `<scope>/<lang>` so scoped keys resolve like in the app. */
-const SCOPES: Record<string, Record<AppLang, Translation>> = {};
+const SCOPES: Record<string, Record<AppLang, Translation>> = {
+  catalog: { 'pt-BR': catalogPt, en: catalogEn },
+  favorites: { 'pt-BR': favoritesPt, en: favoritesEn },
+  schedule: { 'pt-BR': schedulePt, en: scheduleEn },
+  search: { 'pt-BR': searchPt, en: searchEn },
+  'show-detail': { 'pt-BR': detailPt, en: detailEn },
+};
 
 /**
  * Real translation files, preloaded synchronously, for component tests. The browser language is

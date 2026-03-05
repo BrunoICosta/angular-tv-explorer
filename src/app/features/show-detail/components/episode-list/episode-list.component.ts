@@ -5,6 +5,7 @@ import { Subject, catchError, map, of, startWith, switchMap } from 'rxjs';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 import { toErrorKey } from '../../../../core/http/api-error';
+import { LanguageService } from '../../../../core/i18n/language.service';
 import { Episode } from '../../../../core/models/tvmaze.model';
 import { RatingComponent } from '../../../../shared/components/rating/rating.component';
 import { SanitizeHtmlPipe } from '../../../../shared/pipes/sanitize-html.pipe';
@@ -27,6 +28,8 @@ export class EpisodeListComponent {
   private readonly reload = new Subject<void>();
 
   readonly seasonId = input.required<number>();
+
+  protected readonly locale = inject(LanguageService).locale;
 
   protected readonly state = toSignal(
     toObservable(this.seasonId).pipe(
@@ -53,7 +56,8 @@ export class EpisodeListComponent {
     this.reload.next();
   }
 
-  protected episodeCode(episode: Episode): string {
-    return episode.number === null ? 'Especial' : `E${String(episode.number).padStart(2, '0')}`;
+  /** `E01`, or null for specials (labelled in the template). */
+  protected episodeCode(episode: Episode): string | null {
+    return episode.number === null ? null : `E${String(episode.number).padStart(2, '0')}`;
   }
 }

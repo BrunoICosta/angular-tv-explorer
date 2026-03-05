@@ -6,6 +6,7 @@ import { Subject, catchError, combineLatest, map, of, startWith, switchMap } fro
 import { TranslocoPipe } from '@jsverse/transloco';
 
 import { toErrorKey } from '../../../../core/http/api-error';
+import { LanguageService } from '../../../../core/i18n/language.service';
 import { CLOCK } from '../../../../core/time/clock.token';
 import { StateMessageComponent } from '../../../../shared/components/state-message/state-message.component';
 import { ScheduleSlotComponent } from '../../components/schedule-slot/schedule-slot.component';
@@ -41,7 +42,12 @@ export class SchedulePageComponent {
   readonly pais = input<string>();
   readonly data = input<string>();
 
-  protected readonly countries = SCHEDULE_COUNTRIES;
+  protected readonly locale = inject(LanguageService).locale;
+  /** Country names come from `Intl.DisplayNames`, so they follow the active language. */
+  protected readonly countries = computed(() => {
+    const names = new Intl.DisplayNames([this.locale()], { type: 'region' });
+    return SCHEDULE_COUNTRIES.map((code) => ({ code, name: names.of(code) ?? code }));
+  });
   protected readonly today = toIsoDate(this.now());
 
   protected readonly country = computed(() => {
@@ -54,7 +60,7 @@ export class SchedulePageComponent {
   });
   protected readonly isToday = computed(() => this.date() === this.today);
   protected readonly countryName = computed(
-    () => this.countries.find((c) => c.code === this.country())?.name ?? this.country(),
+    () => this.countries().find((c) => c.code === this.country())?.name ?? this.country(),
   );
 
   protected readonly state = toSignal(
