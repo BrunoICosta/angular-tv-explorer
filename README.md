@@ -5,7 +5,9 @@
 ![Angular](https://img.shields.io/badge/Angular-20-dd0031?logo=angular)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze](https://www.tvmaze.com/api) (sem chave). Navegue por milhares de séries com rolagem infinita, filtre por gênero e ordene por nota, busque com RxJS enquanto digita, veja sinopse, temporadas, episódios e elenco de cada título, salve favoritas no navegador e consulte a agenda do dia por país. O projeto usa componentes standalone, Signals, o novo control flow (`@if`/`@for`/`@switch`/`@defer`), lazy loading em todas as features e um design escuro próprio, sem biblioteca de UI.
+**English:** [README.en.md](README.en.md)
+
+Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze](https://www.tvmaze.com/api) (sem chave). Navegue por milhares de séries com rolagem infinita, filtre por gênero e ordene por nota, busque com RxJS enquanto digita, veja sinopse, temporadas, episódios e elenco de cada título, salve favoritas no navegador e consulte a agenda do dia por país. A interface está em português (padrão) e inglês. O projeto usa componentes standalone, Signals, o novo control flow (`@if`/`@for`/`@switch`/`@defer`), lazy loading em todas as features e um design escuro próprio, sem biblioteca de UI.
 
 **Demo:** https://brunoicosta.github.io/angular-tv-explorer/
 
@@ -22,7 +24,8 @@ Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze]
 - **Tratamento de erros HTTP**: interceptor funcional com retry e backoff exponencial para falhas de rede, 429 e 5xx, erros normalizados e avisos (toasts) acessíveis.
 - **Skeletons de carregamento**, estados vazios e de erro em todas as telas.
 - Tema escuro, layout responsivo (mobile first), foco visível, link "pular para o conteúdo", `aria-*` nos controles e respeito a `prefers-reduced-motion`.
-- Título da aba e meta description por página.
+- **Internacionalização pt-BR / English** com Transloco: seletor de idioma no cabeçalho, escolha salva no navegador, traduções carregadas por feature e datas/números no formato do idioma ativo.
+- Título da aba e meta description por página, no idioma ativo.
 
 ## Stack
 
@@ -32,6 +35,7 @@ Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze]
 | Angular CLI / `@angular/build` (esbuild) | 20.3.15 |
 | TypeScript (strict) | 5.9 |
 | RxJS | 7.8 |
+| Transloco (`@jsverse/transloco`) | 8.2 |
 | SCSS | — |
 | Karma + Jasmine (ChromeHeadless) | 6.4 / 5.9 |
 | ESLint + angular-eslint + typescript-eslint | 9.39 / 20.7 / 8.54 |
@@ -42,8 +46,8 @@ Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze]
 ```
 src/app/
   app.component.ts   app.config.ts   app.routes.ts
-  core/        singletons: api client, interceptor, favorites store, layout (header/footer/toasts),
-               storage, title strategy, clock
+  core/        singletons: api client, interceptor, favorites store, layout (header/footer/toasts,
+               language switcher), i18n (Transloco, idioma ativo, título/meta), storage, clock
   shared/      componentes de UI reutilizáveis, diretiva de infinite scroll, pipes, utils
   features/
     catalog/      catalog.routes.ts · pages/ · data-access/catalog.store.ts
@@ -52,22 +56,23 @@ src/app/
     favorites/    favorites.routes.ts · pages/
     schedule/     schedule.routes.ts · pages/ · components/ · data-access/
     not-found/
+public/i18n/   pt-BR.json · en.json (raiz) + <feature>/pt-BR.json · <feature>/en.json (escopos)
 ```
 
 - **Lazy loading em tudo**: `app.routes.ts` só conhece os pontos de entrada (`loadChildren` → `*.routes.ts`) e cada página usa `loadComponent`. O shell não importa nenhum componente de feature. O build de produção gera chunks separados por feature:
 
   | Chunk lazy | Tamanho (bruto / transferido) |
   | --- | --- |
-  | `search-page-component` | 28,9 kB / 7,4 kB |
-  | `show-detail-page-component` | 20,0 kB / 5,8 kB |
-  | `schedule-page-component` | 11,0 kB / 3,7 kB |
-  | `catalog-page-component` | 6,6 kB / 2,2 kB |
-  | `favorites-page-component` | 5,0 kB / 1,8 kB |
-  | `cast-list-component` (`@defer`) | 3,4 kB / 1,4 kB |
-  | `not-found-page-component` | 1,1 kB / 0,6 kB |
-  | `*-routes` (um por feature) | < 0,4 kB cada |
+  | `search-page-component` | 29,2 kB / 7,5 kB |
+  | `show-detail-page-component` | 21,0 kB / 5,8 kB |
+  | `schedule-page-component` | 12,0 kB / 3,8 kB |
+  | `catalog-page-component` | 6,6 kB / 2,1 kB |
+  | `favorites-page-component` | 5,4 kB / 1,8 kB |
+  | `cast-list-component` (`@defer`) | 3,7 kB / 1,4 kB |
+  | `not-found-page-component` | 1,2 kB / 0,6 kB |
+  | `*-routes` (um por feature) | < 0,5 kB cada |
 
-  O bundle inicial fica em ~107 kB transferidos. `PreloadAllModules` baixa as outras features em segundo plano depois que a primeira tela carrega.
+  O bundle inicial fica em ~113 kB transferidos (Transloco incluso). `PreloadAllModules` baixa as outras features em segundo plano depois que a primeira tela carrega.
 - **Providers por feature**: `CatalogStore`, `SeasonEpisodesService` e `ScheduleService` são declarados no `providers` da rota, então chegam junto com o chunk. Como o injector da rota vive mais que o componente, o catálogo mantém páginas, filtros e rolagem ao voltar de uma série.
 - **Signals para estado, RxJS para fluxos assíncronos**: stores e componentes usam `signal`/`computed`/`linkedSignal`; buscas, paginação e recargas usam operadores RxJS e chegam ao template via `toSignal`. A lógica da busca é uma função pura (`searchStream`) testada com marble tests.
 - **Input binding do router** (`withComponentInputBinding`): `:id` da série e os query params da agenda chegam como `input()` nos componentes, sem `ActivatedRoute`.
@@ -76,6 +81,24 @@ src/app/
 - **Testabilidade**: `localStorage` e "agora" são injetados por tokens (`BROWSER_STORAGE`, `CLOCK`), o que deixa store e agenda determinísticas nos testes.
 - **Convenções**: arquivos com sufixo de tipo (`*.component.ts`, `*.service.ts`, `*.store.ts`, `*.routes.ts`...), `OnPush` em todos os componentes, `inject()`, `input()`/`output()`/`model()`, bindings de host no objeto `host`, `NgOptimizedImage` para pôsteres. Tudo isso é checado pelo ESLint.
 - **Sem biblioteca de UI**: design system pequeno com tokens CSS (`src/styles/_tokens.scss`) e utilitários globais, para manter o bundle enxuto e o visual próprio.
+
+## Internacionalização
+
+- **Biblioteca**: [Transloco](https://jsverse.gitbook.io/transloco) com `TranslocoHttpLoader` próprio (`core/i18n/transloco-http.loader.ts`), que busca `i18n/<idioma>.json` por caminho relativo, então funciona também sob o base href do GitHub Pages.
+- **Escopos lazy**: cada rota declara `provideTranslocoScope('<feature>')` nos seus `providers`. O arquivo `public/i18n/<feature>/<idioma>.json` só é baixado quando a feature abre, junto com o chunk dela. As chaves ficam prefixadas pelo escopo (`catalog.*`, `search.*`, `favorites.*`, `showDetail.*`, `schedule.*`). O arquivo raiz guarda o que é compartilhado: navegação, erros, filtros, títulos das rotas e os **gêneros da TVMaze** nos dois idiomas.
+- **Idioma inicial**: escolha salva (`localStorage`, chave `tv-explorer:lang`) > idioma do navegador (`pt*` → pt-BR, qualquer outro → en) > pt-BR. O `LanguageService` carrega as traduções antes do primeiro render (`provideAppInitializer`), troca o idioma só depois de baixar o arquivo (a tela nunca mostra chaves cruas) e atualiza `<html lang>`.
+- **Seletor**: `<select>` nativo com `<label>` no cabeçalho, mostrando o idioma atual.
+- **Formatação**: `registerLocaleData` para `pt-BR` e `en-US`. Datas e números usam os pipes do Angular com o locale ativo (`date: 'mediumDate' : undefined : locale()`); dias da semana e nomes de países vêm de `Intl.DateTimeFormat` e `Intl.DisplayNames`.
+- **Conteúdo da API**: sinopses, nomes de séries e episódios aparecem como a TVMaze devolve. Valores conhecidos (gêneros, status, tipo de série) passam pelos pipes `genreLabel` / `apiLabel`, que traduzem quando existe chave e mostram o valor original quando não existe.
+- **Títulos e meta description**: as rotas usam chaves (`title: 'titles.catalog'`) e o `PageMetaService` mantém `document.title` e a descrição no idioma ativo, inclusive depois de uma troca de idioma.
+- **Testes**: `src/testing/transloco-testing.ts` monta o `TranslocoTestingModule` com os arquivos JSON reais, assim os testes verificam os textos em cada idioma.
+
+### Como adicionar um idioma
+
+1. Adicione o código em `AVAILABLE_LANGS`, `LOCALE_BY_LANG` e `LANG_LABELS` (`src/app/core/i18n/i18n.config.ts`) e ajuste `langFromBrowserTag` se fizer sentido.
+2. Registre o locale do Angular em `registerAppLocales()` (`provide-i18n.ts`), por exemplo `@angular/common/locales/es`.
+3. Crie `public/i18n/<código>.json` e `public/i18n/<feature>/<código>.json` para cada escopo, com as mesmas chaves do `pt-BR`.
+4. Inclua os novos arquivos em `src/testing/transloco-testing.ts` e rode `npm run test:ci`.
 
 ## Como rodar
 
@@ -103,6 +126,7 @@ O deploy no GitHub Pages é feito pelo workflow `deploy.yml` com `ng build --bas
 - Ordenar e filtrar a busca (hoje a TVMaze devolve no máximo 10 resultados por termo).
 - Página de pessoa (`/people/:id`) com a filmografia do ator.
 - Modo claro com troca de tema persistida.
+- Mais idiomas (espanhol) e prefixo de idioma na URL para SEO.
 - Testes end-to-end com Playwright cobrindo os fluxos principais.
 - Service worker para uso offline dos favoritos.
 
