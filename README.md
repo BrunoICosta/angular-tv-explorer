@@ -24,7 +24,7 @@ Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze]
 - **Tratamento de erros HTTP**: interceptor funcional com retry e backoff exponencial para falhas de rede, 429 e 5xx, erros normalizados e avisos (toasts) acessíveis.
 - **Skeletons de carregamento**, estados vazios e de erro em todas as telas.
 - Tema escuro, layout responsivo (mobile first), foco visível, link "pular para o conteúdo", `aria-*` nos controles e respeito a `prefers-reduced-motion`.
-- **Internacionalização pt-BR / English** com Transloco: seletor de idioma no cabeçalho, escolha salva no navegador, traduções carregadas por feature e datas/números no formato do idioma ativo.
+- **Internacionalização pt-BR / English** com Transloco: bandeiras (Brasil / EUA) no cabeçalho para trocar o idioma, escolha salva no navegador, traduções carregadas por feature e datas/números no formato do idioma ativo.
 - Título da aba e meta description por página, no idioma ativo.
 
 ## Stack
@@ -87,7 +87,7 @@ public/i18n/   pt-BR.json · en.json (raiz) + <feature>/pt-BR.json · <feature>/
 - **Biblioteca**: [Transloco](https://jsverse.gitbook.io/transloco) com `TranslocoHttpLoader` próprio (`core/i18n/transloco-http.loader.ts`), que busca `i18n/<idioma>.json` por caminho relativo, então funciona também sob o base href do GitHub Pages.
 - **Escopos lazy**: cada rota declara `provideTranslocoScope('<feature>')` nos seus `providers`. O arquivo `public/i18n/<feature>/<idioma>.json` só é baixado quando a feature abre, junto com o chunk dela. As chaves ficam prefixadas pelo escopo (`catalog.*`, `search.*`, `favorites.*`, `showDetail.*`, `schedule.*`). O arquivo raiz guarda o que é compartilhado: navegação, erros, filtros, títulos das rotas e os **gêneros da TVMaze** nos dois idiomas.
 - **Idioma inicial**: escolha salva (`localStorage`, chave `tv-explorer:lang`) > idioma do navegador (`pt*` → pt-BR, qualquer outro → en) > pt-BR. O `LanguageService` carrega as traduções antes do primeiro render (`provideAppInitializer`), troca o idioma só depois de baixar o arquivo (a tela nunca mostra chaves cruas) e atualiza `<html lang>`.
-- **Seletor**: `<select>` nativo com `<label>` no cabeçalho, mostrando o idioma atual.
+- **Seletor**: bandeiras em SVG inline (emoji de bandeira não aparece no Windows) dentro de um `radiogroup` rotulado "Idioma"/"Language". Cada botão tem nome acessível e `title` no próprio idioma ("Português (Brasil)", "English") e atributo `lang`. A opção ativa ganha contorno, as setas do teclado trocam a seleção e só a opção marcada recebe Tab.
 - **Formatação**: `registerLocaleData` para `pt-BR` e `en-US`. Datas e números usam os pipes do Angular com o locale ativo (`date: 'mediumDate' : undefined : locale()`); dias da semana e nomes de países vêm de `Intl.DateTimeFormat` e `Intl.DisplayNames`.
 - **Conteúdo da API**: sinopses, nomes de séries e episódios aparecem como a TVMaze devolve. Valores conhecidos (gêneros, status, tipo de série) passam pelos pipes `genreLabel` / `apiLabel`, que traduzem quando existe chave e mostram o valor original quando não existe.
 - **Títulos e meta description**: as rotas usam chaves (`title: 'titles.catalog'`) e o `PageMetaService` mantém `document.title` e a descrição no idioma ativo, inclusive depois de uma troca de idioma.

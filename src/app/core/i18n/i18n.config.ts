@@ -12,9 +12,9 @@ export const LOCALE_BY_LANG: Readonly<Record<AppLang, string>> = {
   en: 'en-US',
 };
 
-/** Native name of each language, shown in the switcher. */
+/** Native name of each language: accessible name and tooltip of the switcher flags. */
 export const LANG_LABELS: Readonly<Record<AppLang, string>> = {
-  'pt-BR': 'Português',
+  'pt-BR': 'Português (Brasil)',
   en: 'English',
 };
 

@@ -18,7 +18,7 @@ TV show explorer built with **Angular 20** and the public, keyless [TVMaze API](
 - Today's schedule (`/schedule`) grouped by airtime, with country/date as query params bound to inputs.
 - Functional HTTP interceptor with retry and exponential backoff, plus accessible toasts.
 - Loading skeletons, empty and error states, a dark theme, a responsive layout and accessible controls.
-- **i18n (pt-BR / English)** with Transloco: header language switcher, the choice saved in the browser, translations lazy-loaded per feature, and dates/numbers in the active locale.
+- **i18n (pt-BR / English)** with Transloco: Brazil/USA flag buttons in the header (an accessible radio group), the choice saved in the browser, translations lazy-loaded per feature, and dates/numbers in the active locale.
 
 ## Stack
 
