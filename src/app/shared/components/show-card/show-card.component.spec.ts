@@ -49,6 +49,7 @@ describe('ShowCardComponent', () => {
     expect(meta).not.toContain('Suspense');
     expect(element.querySelector('a')?.getAttribute('href')).toBe('/series/169');
     expect(element.querySelector('img')?.getAttribute('alt')).toBe('Pôster de Breaking Bad');
+    expect(element.querySelector('.rating')?.getAttribute('aria-label')).toBe('Nota 9,2 de 10');
   });
 
   it('falls back to initials when there is no poster', () => {
@@ -68,5 +69,32 @@ describe('ShowCardComponent', () => {
     expect(TestBed.inject(FavoritesStore).isFavorite(169)).toBeTrue();
     expect(button.getAttribute('aria-pressed')).toBe('true');
     expect(button.getAttribute('aria-label')).toBe('Remover Breaking Bad dos favoritos');
+  });
+});
+
+describe('ShowCardComponent in English', () => {
+  it('renders translated poster text, genres and favorite label', () => {
+    TestBed.configureTestingModule({
+      imports: [ShowCardComponent],
+      providers: [
+        provideRouter([]),
+        provideTranslocoTesting('en'),
+        { provide: BROWSER_STORAGE, useValue: new MemoryStorage() },
+      ],
+    });
+    const fixture = TestBed.createComponent(ShowCardComponent);
+    fixture.componentRef.setInput('show', { ...show, genres: ['Science-Fiction', 'Children'] });
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.querySelector('img')?.getAttribute('alt')).toBe('Breaking Bad poster');
+    expect(element.querySelector('.card__meta')?.textContent).toContain('Science fiction');
+    expect(element.querySelector('.card__meta')?.textContent).toContain('Kids');
+    expect(element.querySelector('.rating')?.getAttribute('aria-label')).toBe(
+      'Rated 9.2 out of 10',
+    );
+    expect(element.querySelector('.fav')?.getAttribute('aria-label')).toBe(
+      'Add Breaking Bad to favorites',
+    );
   });
 });
