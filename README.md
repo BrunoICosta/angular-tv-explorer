@@ -1,7 +1,6 @@
 # TV Explorer
 
 [![CI](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/ci.yml/badge.svg)](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/ci.yml)
-[![Deploy](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/deploy.yml/badge.svg)](https://github.com/BrunoICosta/angular-tv-explorer/actions/workflows/deploy.yml)
 ![Angular](https://img.shields.io/badge/Angular-20-dd0031?logo=angular)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
@@ -9,7 +8,7 @@
 
 Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze](https://www.tvmaze.com/api) (sem chave). Navegue por milhares de séries com rolagem infinita, filtre por gênero e ordene por nota, busque com RxJS enquanto digita, veja sinopse, temporadas, episódios e elenco de cada título, salve favoritas no navegador e consulte a agenda do dia por país. A interface está em português (padrão) e inglês. O projeto usa componentes standalone, Signals, o novo control flow (`@if`/`@for`/`@switch`/`@defer`), lazy loading em todas as features e um design escuro próprio, sem biblioteca de UI.
 
-**Demo:** https://brunoicosta.github.io/angular-tv-explorer/
+**Demo:** https://portfolio.brunoisaac.dev/angular-tv-explorer/
 
 ![Tela do catálogo do TV Explorer](docs/screenshot.png)
 
@@ -84,7 +83,7 @@ public/i18n/   pt-BR.json · en.json (raiz) + <feature>/pt-BR.json · <feature>/
 
 ## Internacionalização
 
-- **Biblioteca**: [Transloco](https://jsverse.gitbook.io/transloco) com `TranslocoHttpLoader` próprio (`core/i18n/transloco-http.loader.ts`), que busca `i18n/<idioma>.json` por caminho relativo, então funciona também sob o base href do GitHub Pages.
+- **Biblioteca**: [Transloco](https://jsverse.gitbook.io/transloco) com `TranslocoHttpLoader` próprio (`core/i18n/transloco-http.loader.ts`), que busca `i18n/<idioma>.json` por caminho relativo, então funciona também sob o base href `/angular-tv-explorer/` da demo.
 - **Escopos lazy**: cada rota declara `provideTranslocoScope('<feature>')` nos seus `providers`. O arquivo `public/i18n/<feature>/<idioma>.json` só é baixado quando a feature abre, junto com o chunk dela. As chaves ficam prefixadas pelo escopo (`catalog.*`, `search.*`, `favorites.*`, `showDetail.*`, `schedule.*`). O arquivo raiz guarda o que é compartilhado: navegação, erros, filtros, títulos das rotas e os **gêneros da TVMaze** nos dois idiomas.
 - **Idioma inicial**: escolha salva (`localStorage`, chave `tv-explorer:lang`) > idioma do navegador (`pt*` → pt-BR, qualquer outro → en) > pt-BR. O `LanguageService` carrega as traduções antes do primeiro render (`provideAppInitializer`), troca o idioma só depois de baixar o arquivo (a tela nunca mostra chaves cruas) e atualiza `<html lang>`.
 - **Seletor**: bandeiras em SVG inline (emoji de bandeira não aparece no Windows) dentro de um `radiogroup` rotulado "Idioma"/"Language". Cada botão tem nome acessível e `title` no próprio idioma ("Português (Brasil)", "English") e atributo `lang`. A opção ativa ganha contorno, as setas do teclado trocam a seleção e só a opção marcada recebe Tab.
@@ -119,7 +118,11 @@ npm run format:check      # Prettier
 npm run build             # build de produção em dist/
 ```
 
-O deploy no GitHub Pages é feito pelo workflow `deploy.yml` com `ng build --base-href /angular-tv-explorer/`, copiando `index.html` para `404.html` para o roteamento da SPA funcionar.
+`npm run build:cf` gera o build de produção com `--base-href /angular-tv-explorer/` em `dist/angular-tv-explorer/browser`.
+
+## Deploy
+
+Publicado na Cloudflare (Workers static assets) em https://portfolio.brunoisaac.dev/angular-tv-explorer/ pelo pipeline do repositório [portfolio](https://github.com/BrunoICosta/portfolio). O fallback de SPA (`/angular-tv-explorer/*` → `index.html`) é feito por um Worker desse pipeline. Este repositório mantém só o CI (`ci.yml`: lint, formatação, testes e build).
 
 ## Possíveis próximos passos
 

@@ -4,7 +4,7 @@
 
 TV show explorer built with **Angular 20** and the public, keyless [TVMaze API](https://www.tvmaze.com/api). Browse thousands of shows with infinite scroll, filter by genre and sort by rating, search as you type with RxJS, open a show to see its summary, seasons, episodes and cast, keep favorites in the browser and check today's schedule by country. The UI is available in Portuguese (default) and English.
 
-**Live demo:** https://brunoicosta.github.io/angular-tv-explorer/
+**Live demo:** https://portfolio.brunoisaac.dev/angular-tv-explorer/
 
 ![TV Explorer catalog](docs/screenshot.png)
 
@@ -45,7 +45,12 @@ npm start            # http://localhost:4200
 npm run test:ci      # unit tests (ChromeHeadless)
 npm run lint
 npm run build
+npm run build:cf     # production build under /angular-tv-explorer/ (dist/angular-tv-explorer/browser)
 ```
+
+## Deploy
+
+Published on Cloudflare (Workers static assets) at https://portfolio.brunoisaac.dev/angular-tv-explorer/ by the pipeline in the [portfolio](https://github.com/BrunoICosta/portfolio) repository. This repository only runs CI (lint, formatting, tests and build).
 
 ## Author
 
