@@ -72,7 +72,7 @@ describe('ShowDetailPageComponent', () => {
     expect(page.querySelector('.hero__summary')?.innerHTML).not.toContain('script');
     expect(page.textContent).toContain('Mistério');
     expect(page.textContent).toContain('2017–2020');
-    expect(TestBed.inject(Title).getTitle()).toBe('Dark · TV Explorer');
+    expect(TestBed.inject(Title).getTitle()).toBe('Dark · Explorador de Séries');
     expect(TestBed.inject(Meta).getTag('name="description"')?.content).toBe(
       'Dark is a family saga',
     );

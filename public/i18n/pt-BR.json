@@ -1,4 +1,9 @@
 {
+  "app": {
+    "name": "Explorador de Séries",
+    "brandStart": "Explorador de ",
+    "brandEnd": "Séries"
+  },
   "meta": {
     "description": "Explore séries de TV, busque títulos, veja temporadas, elenco e a agenda do dia com dados da TVMaze."
   },
@@ -12,7 +17,7 @@
   },
   "shell": {
     "skipLink": "Pular para o conteúdo",
-    "home": "TV Explorer, página inicial"
+    "home": "Explorador de Séries, página inicial"
   },
   "nav": {
     "label": "Navegação principal",

@@ -20,5 +20,6 @@ describe('AppComponent', () => {
     expect(element.querySelector('app-header')).not.toBeNull();
     expect(element.querySelector('main#main-content')).not.toBeNull();
     expect(element.querySelector('app-footer')?.textContent).toContain('TVMaze');
+    expect(element.querySelector('.brand__name')?.textContent?.trim()).toBe('Explorador de Séries');
   });
 });

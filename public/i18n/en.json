@@ -1,4 +1,9 @@
 {
+  "app": {
+    "name": "TV Explorer",
+    "brandStart": "TV",
+    "brandEnd": "Explorer"
+  },
   "meta": {
     "description": "Explore TV shows, search titles, browse seasons, cast and today's schedule with TVMaze data."
   },

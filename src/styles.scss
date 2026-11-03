@@ -51,9 +51,17 @@ img {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
   color: inherit;
+}
+
+/* iOS Safari zooms into focused controls under 16px and never zooms back. */
+input,
+select,
+textarea {
+  font-size: max(16px, 1rem);
 }
 
 :focus-visible {
@@ -171,6 +179,8 @@ select {
 .field {
   display: grid;
   gap: var(--space-1);
+  /* Grid items default to min-width: auto; without this, native controls set the width. */
+  min-width: 0;
 
   label {
     font-size: var(--text-xs);
@@ -197,6 +207,20 @@ select {
   &:focus-visible {
     border-color: var(--color-accent);
     border-radius: var(--radius-md);
+  }
+}
+
+/* iOS renders date inputs with an intrinsic width that ignores width: 100%. */
+input[type='date'].input {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  line-height: 40px;
+
+  &::-webkit-date-and-time-value {
+    text-align: left;
   }
 }
 

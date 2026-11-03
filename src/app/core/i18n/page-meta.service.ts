@@ -4,10 +4,11 @@ import { Meta, Title } from '@angular/platform-browser';
 import { TranslocoService } from '@jsverse/transloco';
 import { combineLatest, of, switchMap } from 'rxjs';
 
+/** Fallback before translations load; the visible name comes from the `app.name` key. */
 export const APP_NAME = 'TV Explorer';
 
-export function formatTitle(pageTitle?: string | null): string {
-  return pageTitle ? `${pageTitle} · ${APP_NAME}` : APP_NAME;
+export function formatTitle(pageTitle?: string | null, appName: string = APP_NAME): string {
+  return pageTitle ? `${pageTitle} · ${appName}` : appName;
 }
 
 /**
@@ -30,11 +31,16 @@ export class PageMetaService {
     combineLatest([toObservable(this.titleKey), toObservable(this.titleOverride), lang$])
       .pipe(
         switchMap(([key, override]) =>
-          override !== null ? of(override) : key ? this.transloco.selectTranslate(key) : of(null),
+          combineLatest([
+            override !== null ? of(override) : key ? this.transloco.selectTranslate(key) : of(null),
+            this.transloco.selectTranslate('app.name'),
+          ]),
         ),
         takeUntilDestroyed(destroyRef),
       )
-      .subscribe((value: string | null) => title.setTitle(formatTitle(value)));
+      .subscribe(([value, appName]: [string | null, string]) =>
+        title.setTitle(formatTitle(value, appName)),
+      );
 
     combineLatest([toObservable(this.descriptionOverride), lang$])
       .pipe(

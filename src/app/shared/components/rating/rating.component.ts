@@ -17,7 +17,7 @@ import { IconComponent } from '../icon/icon.component';
         {{ formatted }}
       </span>
     } @else {
-      <span class="rating rating--empty" [attr.aria-label]="'common.noRating' | transloco">—</span>
+      <span class="rating rating--empty" [attr.aria-label]="'common.noRating' | transloco">–</span>
     }
   `,
   styles: `

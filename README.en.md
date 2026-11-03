@@ -2,7 +2,7 @@
 
 **Português:** [README.md](README.md)
 
-TV show explorer built with **Angular 20** and the public, keyless [TVMaze API](https://www.tvmaze.com/api). Browse thousands of shows with infinite scroll, filter by genre and sort by rating, search as you type with RxJS, open a show to see its summary, seasons, episodes and cast, keep favorites in the browser and check today's schedule by country. The UI is available in Portuguese (default) and English.
+TV show explorer built with **Angular 20** and the public, keyless [TVMaze API](https://www.tvmaze.com/api). Browse thousands of shows with infinite scroll, filter by genre and sort by rating, search as you type with RxJS, open a show to see its summary, seasons, episodes and cast, keep favorites in the browser and check today's schedule by country. The UI is available in Portuguese (default) and English, and the app name follows the language: **Explorador de Séries** in pt-BR, **TV Explorer** in English.
 
 **Live demo:** https://portfolio.brunoisaac.dev/angular-tv-explorer/
 

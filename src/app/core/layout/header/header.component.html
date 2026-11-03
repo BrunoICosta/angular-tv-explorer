@@ -2,7 +2,9 @@
   <div class="container header__inner">
     <a class="brand" routerLink="/" [attr.aria-label]="'shell.home' | transloco">
       <span class="brand__logo"><app-icon name="tv" [size]="18" /></span>
-      <span class="brand__name">TV<span>Explorer</span></span>
+      <span class="brand__name"
+        >{{ 'app.brandStart' | transloco }}<span>{{ 'app.brandEnd' | transloco }}</span></span
+      >
     </a>
 
     <nav class="nav" [attr.aria-label]="'nav.label' | transloco">
