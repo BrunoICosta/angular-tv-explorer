@@ -54,4 +54,4 @@ Published on Cloudflare (Workers static assets) at https://portfolio.brunoisaac.
 
 ## Author
 
-Bruno Vinicius Isaac Costa — https://github.com/BrunoICosta · MIT License · Data by [TVMaze](https://www.tvmaze.com/) (CC BY-SA 4.0).
+Bruno Vinicius Isaac Costa Â· https://github.com/BrunoICosta · MIT License · Data by [TVMaze](https://www.tvmaze.com/) (CC BY-SA 4.0).

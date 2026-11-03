@@ -21,24 +21,24 @@ Catálogo de séries de TV feito com **Angular 20** e a API pública da [TVMaze]
 - **Favoritos** guardados em `localStorage` por uma store baseada em Signals, com sincronização entre abas e validação dos dados salvos.
 - **Agenda de hoje** (`/schedule`) agrupada por horário, com seleção de país e data via query params (`?pais=BR&data=2026-02-21`) e destaque do que já foi exibido.
 - **Tratamento de erros HTTP**: interceptor funcional com retry e backoff exponencial para falhas de rede, 429 e 5xx, erros normalizados e avisos (toasts) acessíveis.
-- **Skeletons de carregamento**, estados vazios e de erro em todas as telas.
+- **Skeletons de carregamento**: estados vazios e de erro em todas as telas.
 - Tema escuro, layout responsivo (mobile first), foco visível, link "pular para o conteúdo", `aria-*` nos controles e respeito a `prefers-reduced-motion`.
 - **Internacionalização pt-BR / English** com Transloco: bandeiras (Brasil / EUA) no cabeçalho para trocar o idioma, escolha salva no navegador, traduções carregadas por feature e datas/números no formato do idioma ativo.
 - Título da aba e meta description por página, no idioma ativo.
 
 ## Stack
 
-| Tecnologia | Versão |
-| --- | --- |
-| Angular (standalone, Signals, control flow) | 20.3 |
-| Angular CLI / `@angular/build` (esbuild) | 20.3.15 |
-| TypeScript (strict) | 5.9 |
-| RxJS | 7.8 |
-| Transloco (`@jsverse/transloco`) | 8.2 |
-| SCSS | — |
-| Karma + Jasmine (ChromeHeadless) | 6.4 / 5.9 |
+| Tecnologia                                  | Versão             |
+| ------------------------------------------- | ------------------ |
+| Angular (standalone, Signals, control flow) | 20.3               |
+| Angular CLI / `@angular/build` (esbuild)    | 20.3.15            |
+| TypeScript (strict)                         | 5.9                |
+| RxJS                                        | 7.8                |
+| Transloco (`@jsverse/transloco`)            | 8.2                |
+| SCSS                                        | ,                  |
+| Karma + Jasmine (ChromeHeadless)            | 6.4 / 5.9          |
 | ESLint + angular-eslint + typescript-eslint | 9.39 / 20.7 / 8.54 |
-| Prettier | 3.8 |
+| Prettier                                    | 3.8                |
 
 ## Arquitetura e decisões
 
@@ -60,18 +60,19 @@ public/i18n/   pt-BR.json · en.json (raiz) + <feature>/pt-BR.json · <feature>/
 
 - **Lazy loading em tudo**: `app.routes.ts` só conhece os pontos de entrada (`loadChildren` → `*.routes.ts`) e cada página usa `loadComponent`. O shell não importa nenhum componente de feature. O build de produção gera chunks separados por feature:
 
-  | Chunk lazy | Tamanho (bruto / transferido) |
-  | --- | --- |
-  | `search-page-component` | 29,2 kB / 7,5 kB |
-  | `show-detail-page-component` | 21,0 kB / 5,8 kB |
-  | `schedule-page-component` | 12,0 kB / 3,8 kB |
-  | `catalog-page-component` | 6,6 kB / 2,1 kB |
-  | `favorites-page-component` | 5,4 kB / 1,8 kB |
-  | `cast-list-component` (`@defer`) | 3,7 kB / 1,4 kB |
-  | `not-found-page-component` | 1,2 kB / 0,6 kB |
-  | `*-routes` (um por feature) | < 0,5 kB cada |
+  | Chunk lazy                       | Tamanho (bruto / transferido) |
+  | -------------------------------- | ----------------------------- |
+  | `search-page-component`          | 29,2 kB / 7,5 kB              |
+  | `show-detail-page-component`     | 21,0 kB / 5,8 kB              |
+  | `schedule-page-component`        | 12,0 kB / 3,8 kB              |
+  | `catalog-page-component`         | 6,6 kB / 2,1 kB               |
+  | `favorites-page-component`       | 5,4 kB / 1,8 kB               |
+  | `cast-list-component` (`@defer`) | 3,7 kB / 1,4 kB               |
+  | `not-found-page-component`       | 1,2 kB / 0,6 kB               |
+  | `*-routes` (um por feature)      | < 0,5 kB cada                 |
 
   O bundle inicial fica em ~113 kB transferidos (Transloco incluso). `PreloadAllModules` baixa as outras features em segundo plano depois que a primeira tela carrega.
+
 - **Providers por feature**: `CatalogStore`, `SeasonEpisodesService` e `ScheduleService` são declarados no `providers` da rota, então chegam junto com o chunk. Como o injector da rota vive mais que o componente, o catálogo mantém páginas, filtros e rolagem ao voltar de uma série.
 - **Signals para estado, RxJS para fluxos assíncronos**: stores e componentes usam `signal`/`computed`/`linkedSignal`; buscas, paginação e recargas usam operadores RxJS e chegam ao template via `toSignal`. A lógica da busca é uma função pura (`searchStream`) testada com marble tests.
 - **Input binding do router** (`withComponentInputBinding`): `:id` da série e os query params da agenda chegam como `input()` nos componentes, sem `ActivatedRoute`.
@@ -135,6 +136,6 @@ Publicado na Cloudflare (Workers static assets) em https://portfolio.brunoisaac.
 
 ## Autor
 
-Bruno Vinicius Isaac Costa — https://github.com/BrunoICosta
+Bruno Vinicius Isaac Costa Â· https://github.com/BrunoICosta
 
 Dados fornecidos pela [TVMaze](https://www.tvmaze.com/) sob licença [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Licença do código: [MIT](LICENSE).
